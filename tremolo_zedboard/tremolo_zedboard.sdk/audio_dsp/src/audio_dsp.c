@@ -27,9 +27,8 @@ int main(void)
 
 	xil_printf("ADAU1761 configured\n\r");
 
-	/* Initialise GPIO and NCO peripherals */
+	/* Initialise GPIO */
 	gpio_init();
-	nco_init(&Nco);
 
 	xil_printf("GPIO and NCO peripheral configured\r\n");
 
@@ -56,9 +55,6 @@ void menu(){
 	u8 inp = 0x00;
 	u32 CntrlRegister;
 
-	/* Turn off all LEDs */
-	Xil_Out32(LED_BASE, 0);
-
 	CntrlRegister = XUartPs_ReadReg(UART_BASEADDR, XUARTPS_CR_OFFSET);
 
 	XUartPs_WriteReg(UART_BASEADDR, XUARTPS_CR_OFFSET,
@@ -66,8 +62,8 @@ void menu(){
 				   XUARTPS_CR_TX_EN | XUARTPS_CR_RX_EN));
 
 	xil_printf("\r\n\r\n");
-	xil_printf("Embedded LMS Filtering Demo\r\n");
-	xil_printf("Enter 's' to stream pure audio, 'n' to add tonal noise and 'f' to adaptively filter\r\n");
+	xil_printf("Embedded Audio Demo\r\n");
+	xil_printf("Enter 's' to stream pure audio, 't' to add tremolo\r\n");
 	xil_printf("----------------------------------------\r\n");
 
 	// Wait for input from UART via the terminal
@@ -80,16 +76,10 @@ void menu(){
 		xil_printf("Press 'q' to return to the main menu\r\n");
 		audio_stream();
 		break;
-	case 'n':
-		xil_printf("ENTERING NOISE GENERATION OPERATION\r\n");
-		xil_printf("Select step size via the DIP switches...\r\n\n");
+	case 't':
+		xil_printf("ENTERING TREMOLO MODULATION EFFECT (not implemented yet)\r\n");
 		xil_printf("Press 'q' to return to the main menu\r\n");
-		tonal_noise();
-		break;
-	case 'f':
-		xil_printf("ENTERING LMS FILTERING OPERATION\r\n");
-		xil_printf("Press 'q' to return to the main menu\r\n");
-		lms_filter();
+		audio_stream();
 		break;
 	default:
 		menu();
