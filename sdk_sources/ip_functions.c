@@ -33,6 +33,34 @@ void audio_stream(){
 	else audio_stream();
 } // audio_stream()
 
+/* ---------------------------------------------------------------------------- *
+ * 								tremolo_stream()								*
+ * ---------------------------------------------------------------------------- *
+ * This function performs tremolo effect on given audio sample.
+ *
+ * The main menu can be accessed by entering 'q' on the keyboard.
+ * ---------------------------------------------------------------------------- */
+void tremolo_stream(){
+	u64  in_left, in_right;
+
+	while (!XUartPs_IsReceiveData(UART_BASEADDR)){
+		// Read audio input from codec
+		in_left = Xil_In32(I2S_DATA_RX_L_REG);
+		in_right = Xil_In32(I2S_DATA_RX_R_REG);
+		// Tremolo effect
+		in_left = 0*in_left >> 23;
+		in_right = 0*in_right >> 23;
+		// Write audio output to codec
+		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
+		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
+	}
+
+	/* If input from the terminal is 'q', then return to menu.
+	 * Else, continue streaming. */
+	if(XUartPs_ReadReg(UART_BASEADDR, XUARTPS_FIFO_OFFSET) == 'q') menu();
+	else tremolo_stream();
+} // audio_stream()
+
 
 /* ---------------------------------------------------------------------------- *
  * 								gpio_initi()									*

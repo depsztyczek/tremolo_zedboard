@@ -77,9 +77,9 @@ void menu(){
 		audio_stream();
 		break;
 	case 't':
-		xil_printf("ENTERING TREMOLO MODULATION EFFECT (not implemented yet)\r\n");
+		xil_printf("ENTERING TREMOLO MODULATION EFFECT\r\n");
 		xil_printf("Press 'q' to return to the main menu\r\n");
-		audio_stream();
+		tremolo_stream();
 		break;
 	default:
 		menu();
