@@ -42,17 +42,21 @@ void audio_stream(){
  * ---------------------------------------------------------------------------- */
 void tremolo_stream(){
 	u64  in_left, in_right;
+	u32 index = 0;
+	extern u32 envelope[];
 
 	while (!XUartPs_IsReceiveData(UART_BASEADDR)){
 		// Read audio input from codec
 		in_left = Xil_In32(I2S_DATA_RX_L_REG);
 		in_right = Xil_In32(I2S_DATA_RX_R_REG);
 		// Tremolo effect
-		in_left = 0*in_left >> 23;
-		in_right = 0*in_right >> 23;
+		in_left = (envelope[index]*in_left) >> 23;
+		in_right = (envelope[index]*in_right) >> 23;
 		// Write audio output to codec
 		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
 		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
+		index ++;
+		index %= 24000;
 	}
 
 	/* If input from the terminal is 'q', then return to menu.
