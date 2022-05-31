@@ -41,7 +41,7 @@ void audio_stream(){
  * The main menu can be accessed by entering 'q' on the keyboard.
  * ---------------------------------------------------------------------------- */
 void tremolo_stream(){
-	u64  in_left, in_right;
+	u32  in_left, in_right;
 	u32 index = 0;
 	extern u32 envelope[];
 
@@ -50,8 +50,8 @@ void tremolo_stream(){
 		in_left = Xil_In32(I2S_DATA_RX_L_REG);
 		in_right = Xil_In32(I2S_DATA_RX_R_REG);
 		// Tremolo effect
-		in_left = (envelope[index]*in_left) >> 23;
-		in_right = (envelope[index]*in_right) >> 23;
+		in_left = ((u64)envelope[index]*(u64)in_left) >> 23;
+		in_right = ((u64)envelope[index]*(u64)in_right) >> 23;
 		// Write audio output to codec
 		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
 		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
