@@ -42,20 +42,23 @@ void audio_stream(){
  * ---------------------------------------------------------------------------- */
 void tremolo_stream(){
 	u32  in_left, in_right;
+	s32 in_left_signed, in_right_signed;
 	u32 index = 0;
-	extern u32 envelope[];
+	extern s32 envelope[];
 
 	while (!XUartPs_IsReceiveData(UART_BASEADDR)){
 		// Read audio input from codec
 		in_left = Xil_In32(I2S_DATA_RX_L_REG);
 		in_right = Xil_In32(I2S_DATA_RX_R_REG);
+		in_left_signed = (s32)(in_left<<8);
+		in_right_signed = (s32)(in_right<<8);
 		// Tremolo effect
-		in_left = ((u64)envelope[index]*(u64)in_left) >> 23;
-		in_right = ((u64)envelope[index]*(u64)in_right) >> 23;
+		in_left = (s32)(((s64)envelope[index]*(s64)in_left_signed) >> 31);
+		in_right = (s32)(((s64)envelope[index]*(s64)in_right_signed) >> 31);
 		// Write audio output to codec
 		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
 		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
-		index ++;
+		index++;
 		index %= 24000;
 	}
 
