@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:user:zed_audio_ctrl:1.0
--- IP Revision: 1
+-- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -133,7 +133,7 @@ ARCHITECTURE ip_design_zed_audio_ctrl_0_0_arch OF ip_design_zed_audio_ctrl_0_0 I
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF ip_design_zed_audio_ctrl_0_0_arch : ARCHITECTURE IS "ip_design_zed_audio_ctrl_0_0,i2s_ctrl,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF ip_design_zed_audio_ctrl_0_0_arch: ARCHITECTURE IS "ip_design_zed_audio_ctrl_0_0,i2s_ctrl,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=zed_audio_ctrl,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=32,C_S_AXI_MIN_SIZE=0x000001FF,C_USE_WSTRB=0,C_DPHASE_TIMEOUT=8,C_BASEADDR=0xFFFFFFFF,C_HIGHADDR=0x00000000,C_FAMILY=zynq,C_NUM_REG=1,C_NUM_MEM=1,C_SLV_AWIDTH=32,C_SLV_DWIDTH=32}";
+  ATTRIBUTE CORE_GENERATION_INFO OF ip_design_zed_audio_ctrl_0_0_arch: ARCHITECTURE IS "ip_design_zed_audio_ctrl_0_0,i2s_ctrl,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=zed_audio_ctrl,x_ipVersion=1.0,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=32,C_S_AXI_MIN_SIZE=0x000001FF,C_USE_WSTRB=0,C_DPHASE_TIMEOUT=8,C_BASEADDR=0xFFFFFFFF,C_HIGHADDR=0x00000000,C_FAMILY=zynq,C_NUM_REG=1,C_NUM_MEM=1,C_SLV_AWIDTH=32,C_SLV_DWIDTH=32}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF S_AXI_AWREADY: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI AWREADY";

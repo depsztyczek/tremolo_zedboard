@@ -229,8 +229,8 @@ begin
 		LRCLK => lrclk_int,
 		SDATA => SDATA_O,
 		EN => en,
-		LDATA => DataTx_L(23 downto 0),
-		RDATA => DataTx_R(23 downto 0)
+		LDATA => ldata_in,
+		RDATA => rdata_in
 	);
   
   LRCLK <= lrclk_int;
