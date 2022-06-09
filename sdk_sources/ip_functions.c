@@ -6,68 +6,6 @@
 
 #include "audio_dsp.h"
 
-/* ---------------------------------------------------------------------------- *
- * 								audio_stream()									*
- * ---------------------------------------------------------------------------- *
- * This function performs audio loopback streaming by sampling the input audio
- * from the codec and then immediately passing the sample to the output of the
- * codec.
- *
- * The main menu can be accessed by entering 'q' on the keyboard.
- * ---------------------------------------------------------------------------- */
-void audio_stream(){
-	u32  in_left, in_right;
-
-	while (!XUartPs_IsReceiveData(UART_BASEADDR)){
-		// Read audio input from codec
-		in_left = Xil_In32(I2S_DATA_RX_L_REG);
-		in_right = Xil_In32(I2S_DATA_RX_R_REG);
-		// Write audio output to codec
-		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
-		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
-	}
-
-	/* If input from the terminal is 'q', then return to menu.
-	 * Else, continue streaming. */
-	if(XUartPs_ReadReg(UART_BASEADDR, XUARTPS_FIFO_OFFSET) == 'q') menu();
-	else audio_stream();
-} // audio_stream()
-
-/* ---------------------------------------------------------------------------- *
- * 								tremolo_stream()								*
- * ---------------------------------------------------------------------------- *
- * This function performs tremolo effect on given audio sample.
- *
- * The main menu can be accessed by entering 'q' on the keyboard.
- * ---------------------------------------------------------------------------- */
-void tremolo_stream(){
-	u32  in_left, in_right;
-	s32 in_left_signed, in_right_signed;
-	u32 index = 0;
-	extern s32 envelope[];
-
-	while (!XUartPs_IsReceiveData(UART_BASEADDR)){
-		// Read audio input from codec
-		in_left = Xil_In32(I2S_DATA_RX_L_REG);
-		in_right = Xil_In32(I2S_DATA_RX_R_REG);
-		in_left_signed = (s32)(in_left<<8);
-		in_right_signed = (s32)(in_right<<8);
-		// Tremolo effect
-		in_left = (s32)(((s64)envelope[index]*(s64)in_left_signed) >> 31);
-		in_right = (s32)(((s64)envelope[index]*(s64)in_right_signed) >> 31);
-		// Write audio output to codec
-		Xil_Out32(I2S_DATA_TX_L_REG, in_left);
-		Xil_Out32(I2S_DATA_TX_R_REG, in_right);
-		index++;
-		index %= 24000;
-	}
-
-	/* If input from the terminal is 'q', then return to menu.
-	 * Else, continue streaming. */
-	if(XUartPs_ReadReg(UART_BASEADDR, XUARTPS_FIFO_OFFSET) == 'q') menu();
-	else tremolo_stream();
-} // audio_stream()
-
 
 /* ---------------------------------------------------------------------------- *
  * 								gpio_initi()									*

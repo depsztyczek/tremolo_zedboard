@@ -27,10 +27,10 @@ preplace netloc zed_audio_ctrl_0_LRCLK 1 3 2 1290J -580 1650J
 preplace netloc SDATA_I_0_1 1 0 3 NJ -550 440 -700 900J
 preplace netloc zed_audio_ctrl_0_SDATA_O 1 3 2 1310J -550 NJ
 preplace netloc processing_system7_0_FCLK_CLK1 1 2 3 870J -450 NJ -450 1630J
-preplace netloc axi_gpio_1_GPIO2 1 1 4 NJ -1050 NJ -1050 NJ -1050 1650J
 preplace netloc ps7_0_axi_periph_M02_AXI 1 0 5 -20 -1140 NJ -1140 NJ -1140 NJ -1140 1620
 preplace netloc ps7_0_axi_periph_M01_AXI 1 0 5 -30 -1150 NJ -1150 NJ -1150 NJ -1150 1640
 preplace netloc processing_system7_0_DDR 1 2 3 880J -660 1310J -620 1630
+preplace netloc axi_gpio_1_GPIO2 1 1 4 NJ -1050 NJ -1050 NJ -1050 1650J
 preplace netloc processing_system7_0_FIXED_IO 1 2 3 890J -650 1300J -610 1620
 preplace netloc axi_gpio_0_GPIO 1 1 4 420J -940 NJ -940 NJ -940 1650J
 preplace netloc axi_gpio_1_GPIO 1 1 4 NJ -1070 NJ -1070 NJ -1070 NJ

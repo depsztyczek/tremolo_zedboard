@@ -226,7 +226,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f155e0ee</spirit:value>
+            <spirit:value>e1b2980d</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -242,7 +242,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f155e0ee</spirit:value>
+            <spirit:value>e1b2980d</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -847,8 +847,8 @@
         <xilinx:taxonomy>/AXI_Infrastructure</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>zed_audio_ctrl</xilinx:displayName>
-      <xilinx:coreRevision>2</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-08T15:01:02Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>4</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2022-06-09T06:37:04Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@22e034a9_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4dc05cd2_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
@@ -856,13 +856,24 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@49702377_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@ce2b1c7_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@7b6ce249_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7dea815_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a02c040_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@406a8092_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1dacbafa_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63f5af0b_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ae31ffb_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e6dd13_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5590d61a_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5699869_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@22753100_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@121caaf3_ARCHIVE_LOCATION">c:/fpga_project/tremolo_zedboard/ip_repo/zed_audio_ctrl</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2019.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="b13f6f5a"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="5156795e"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="4996a675"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="44856e96"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="ae3d4ad4"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="5597bae5"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="d7b959fe"/>

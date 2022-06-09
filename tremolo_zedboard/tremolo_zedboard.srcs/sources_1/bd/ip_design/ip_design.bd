@@ -1475,16 +1475,16 @@
           "processing_system7_0/DDR"
         ]
       },
-      "axi_gpio_1_GPIO2": {
-        "interface_ports": [
-          "sws_8bits",
-          "axi_gpio_1/GPIO2"
-        ]
-      },
       "processing_system7_0_FIXED_IO": {
         "interface_ports": [
           "FIXED_IO",
           "processing_system7_0/FIXED_IO"
+        ]
+      },
+      "axi_gpio_1_GPIO2": {
+        "interface_ports": [
+          "sws_8bits",
+          "axi_gpio_1/GPIO2"
         ]
       },
       "axi_gpio_0_GPIO": {
@@ -1493,16 +1493,16 @@
           "axi_gpio_0/GPIO"
         ]
       },
-      "axi_gpio_1_GPIO": {
-        "interface_ports": [
-          "btns_5bits",
-          "axi_gpio_1/GPIO"
-        ]
-      },
       "ps7_0_axi_periph_M00_AXI": {
         "interface_ports": [
           "ps7_0_axi_periph/M00_AXI",
           "zed_audio_ctrl_0/S_AXI"
+        ]
+      },
+      "axi_gpio_1_GPIO": {
+        "interface_ports": [
+          "btns_5bits",
+          "axi_gpio_1/GPIO"
         ]
       },
       "processing_system7_0_IIC_1": {
