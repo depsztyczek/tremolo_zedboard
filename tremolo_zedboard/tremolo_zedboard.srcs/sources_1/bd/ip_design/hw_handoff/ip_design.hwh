@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Jun 10 15:15:49 2022" VIVADOVERSION="2019.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Jun 10 15:48:35 2022" VIVADOVERSION="2019.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zed:part0:1.4" DEVICE="7z020" NAME="ip_design" PACKAGE="clg484" SPEEDGRADE="-1"/>
 
   <EXTERNALPORTS>
-    <PORT DIR="O" NAME="BCLK_0" SIGIS="undef" SIGNAME="i2s_serdes_0_BCLK">
+    <PORT DIR="O" NAME="BCLK_0" SIGIS="undef" SIGNAME="i2s_clocking_0_BCLK">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="i2s_serdes_0" PORT="BCLK"/>
+        <CONNECTION INSTANCE="i2s_clocking_0" PORT="BCLK"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="LRCLK_0" SIGIS="undef" SIGNAME="i2s_serdes_0_LRCLK">
+    <PORT DIR="O" NAME="LRCLK_0" SIGIS="undef" SIGNAME="i2s_clocking_0_LRCLK">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="i2s_serdes_0" PORT="LRCLK"/>
+        <CONNECTION INSTANCE="i2s_clocking_0" PORT="LRCLK"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="SDATA_I_0" SIGIS="undef" SIGNAME="External_Ports_SDATA_I_0">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="i2s_serdes_0" PORT="SDATA_I"/>
+        <CONNECTION INSTANCE="iis_deserializer_0" PORT="SDATA"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="SDATA_O_0" SIGIS="undef" SIGNAME="i2s_serdes_0_SDATA_O">
+    <PORT DIR="O" NAME="SDATA_O_0" SIGIS="undef" SIGNAME="iis_serializer_0_SDATA">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="i2s_serdes_0" PORT="SDATA_O"/>
+        <CONNECTION INSTANCE="iis_serializer_0" PORT="SDATA"/>
       </CONNECTIONS>
     </PORT>
     <PORT CLKFREQUENCY="10000000" DIR="O" NAME="FCLK_CLK1_0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">
@@ -590,10 +590,10 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="2" FULLNAME="/i2s_serdes_0" HWVERSION="1.0" INSTANCE="i2s_serdes_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="i2s_serdes" VLNV="xilinx.com:user:i2s_serdes:1.0">
+    <MODULE COREREVISION="2" FULLNAME="/i2s_clocking_0" HWVERSION="1.0" INSTANCE="i2s_clocking_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="i2s_clocking" VLNV="xilinx.com:user:i2s_clocking:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="ip_design_i2s_serdes_0_0"/>
+        <PARAMETER NAME="Component_Name" VALUE="ip_design_i2s_clocking_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
@@ -602,24 +602,115 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="SDATA_I" SIGIS="undef" SIGNAME="External_Ports_SDATA_I_0">
+        <PORT DIR="O" NAME="BCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_BCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="BCLK_0"/>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="SCLK"/>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="SCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="LRCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_LRCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="LRCLK_0"/>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="LRCLK"/>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="LRCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="EN" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="EN"/>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/iis_deserializer_0" HWVERSION="1.0" INSTANCE="iis_deserializer_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="iis_deserializer" VLNV="xilinx.com:user:iis_deserializer:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="ip_design_iis_deserializer_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="CLK_100MHZ" SIGIS="undef" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="SCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_BCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="BCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="LRCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_LRCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="LRCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="SDATA" SIGIS="undef" SIGNAME="External_Ports_SDATA_I_0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="SDATA_I_0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="BCLK" SIGIS="undef" SIGNAME="i2s_serdes_0_BCLK">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="BCLK_0"/>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="EN"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="LRCLK" SIGIS="undef" SIGNAME="i2s_serdes_0_LRCLK">
+        <PORT DIR="O" LEFT="23" NAME="LDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_LDATA">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="LRCLK_0"/>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="LDATA"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="SDATA_O" SIGIS="undef" SIGNAME="i2s_serdes_0_SDATA_O">
+        <PORT DIR="O" LEFT="23" NAME="RDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_RDATA">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="RDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="VALID" SIGIS="undef"/>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="4" FULLNAME="/iis_serializer_0" HWVERSION="1.0" INSTANCE="iis_serializer_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="iis_serializer" VLNV="xilinx.com:user:iis_serializer:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="ip_design_iis_serializer_0_2"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="CLK_100MHZ" SIGIS="undef" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="SCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_BCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="BCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="LRCLK" SIGIS="undef" SIGNAME="i2s_clocking_0_LRCLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="LRCLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="SDATA" SIGIS="undef" SIGNAME="iis_serializer_0_SDATA">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="SDATA_O_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="23" NAME="LDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_LDATA">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="LDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="23" NAME="RDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_RDATA">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="RDATA"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1808,7 +1899,9 @@
             <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aclk"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M01_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_ACLK"/>
-            <CONNECTION INSTANCE="i2s_serdes_0" PORT="CLK_100M"/>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="CLK_100M"/>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="CLK_100MHZ"/>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="CLK_100MHZ"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="10000000" DIR="O" NAME="FCLK_CLK1" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">

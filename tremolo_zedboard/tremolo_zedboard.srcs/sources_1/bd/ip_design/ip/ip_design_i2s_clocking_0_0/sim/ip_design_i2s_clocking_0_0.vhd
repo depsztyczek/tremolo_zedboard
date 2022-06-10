@@ -46,44 +46,41 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: xilinx.com:user:i2s_serdes:1.0
+-- IP VLNV: xilinx.com:user:i2s_clocking:1.0
 -- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY ip_design_i2s_serdes_0_0 IS
+ENTITY ip_design_i2s_clocking_0_0 IS
   PORT (
     CLK_100M : IN STD_LOGIC;
-    SDATA_I : IN STD_LOGIC;
     BCLK : OUT STD_LOGIC;
     LRCLK : OUT STD_LOGIC;
-    SDATA_O : OUT STD_LOGIC
+    EN : OUT STD_LOGIC
   );
-END ip_design_i2s_serdes_0_0;
+END ip_design_i2s_clocking_0_0;
 
-ARCHITECTURE ip_design_i2s_serdes_0_0_arch OF ip_design_i2s_serdes_0_0 IS
+ARCHITECTURE ip_design_i2s_clocking_0_0_arch OF ip_design_i2s_clocking_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
-  ATTRIBUTE DowngradeIPIdentifiedWarnings OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "yes";
-  COMPONENT i2s_serdes IS
+  ATTRIBUTE DowngradeIPIdentifiedWarnings OF ip_design_i2s_clocking_0_0_arch: ARCHITECTURE IS "yes";
+  COMPONENT i2s_clocking IS
     PORT (
       CLK_100M : IN STD_LOGIC;
-      SDATA_I : IN STD_LOGIC;
       BCLK : OUT STD_LOGIC;
       LRCLK : OUT STD_LOGIC;
-      SDATA_O : OUT STD_LOGIC
+      EN : OUT STD_LOGIC
     );
-  END COMPONENT i2s_serdes;
+  END COMPONENT i2s_clocking;
   ATTRIBUTE IP_DEFINITION_SOURCE : STRING;
-  ATTRIBUTE IP_DEFINITION_SOURCE OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "package_project";
+  ATTRIBUTE IP_DEFINITION_SOURCE OF ip_design_i2s_clocking_0_0_arch: ARCHITECTURE IS "package_project";
 BEGIN
-  U0 : i2s_serdes
+  U0 : i2s_clocking
     PORT MAP (
       CLK_100M => CLK_100M,
-      SDATA_I => SDATA_I,
       BCLK => BCLK,
       LRCLK => LRCLK,
-      SDATA_O => SDATA_O
+      EN => EN
     );
-END ip_design_i2s_serdes_0_0_arch;
+END ip_design_i2s_clocking_0_0_arch;

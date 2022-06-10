@@ -46,50 +46,53 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: xilinx.com:user:i2s_serdes:1.0
+-- IP VLNV: xilinx.com:user:iis_deserializer:1.0
 -- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY ip_design_i2s_serdes_0_0 IS
+ENTITY ip_design_iis_deserializer_0_0 IS
   PORT (
-    CLK_100M : IN STD_LOGIC;
-    SDATA_I : IN STD_LOGIC;
-    BCLK : OUT STD_LOGIC;
-    LRCLK : OUT STD_LOGIC;
-    SDATA_O : OUT STD_LOGIC
+    CLK_100MHZ : IN STD_LOGIC;
+    SCLK : IN STD_LOGIC;
+    LRCLK : IN STD_LOGIC;
+    SDATA : IN STD_LOGIC;
+    EN : IN STD_LOGIC;
+    LDATA : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    RDATA : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    VALID : OUT STD_LOGIC
   );
-END ip_design_i2s_serdes_0_0;
+END ip_design_iis_deserializer_0_0;
 
-ARCHITECTURE ip_design_i2s_serdes_0_0_arch OF ip_design_i2s_serdes_0_0 IS
+ARCHITECTURE ip_design_iis_deserializer_0_0_arch OF ip_design_iis_deserializer_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
-  ATTRIBUTE DowngradeIPIdentifiedWarnings OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "yes";
-  COMPONENT i2s_serdes IS
+  ATTRIBUTE DowngradeIPIdentifiedWarnings OF ip_design_iis_deserializer_0_0_arch: ARCHITECTURE IS "yes";
+  COMPONENT iis_deserializer IS
     PORT (
-      CLK_100M : IN STD_LOGIC;
-      SDATA_I : IN STD_LOGIC;
-      BCLK : OUT STD_LOGIC;
-      LRCLK : OUT STD_LOGIC;
-      SDATA_O : OUT STD_LOGIC
+      CLK_100MHZ : IN STD_LOGIC;
+      SCLK : IN STD_LOGIC;
+      LRCLK : IN STD_LOGIC;
+      SDATA : IN STD_LOGIC;
+      EN : IN STD_LOGIC;
+      LDATA : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+      RDATA : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+      VALID : OUT STD_LOGIC
     );
-  END COMPONENT i2s_serdes;
-  ATTRIBUTE X_CORE_INFO : STRING;
-  ATTRIBUTE X_CORE_INFO OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "i2s_serdes,Vivado 2019.1";
-  ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
-  ATTRIBUTE CHECK_LICENSE_TYPE OF ip_design_i2s_serdes_0_0_arch : ARCHITECTURE IS "ip_design_i2s_serdes_0_0,i2s_serdes,{}";
-  ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "ip_design_i2s_serdes_0_0,i2s_serdes,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=i2s_serdes,x_ipVersion=1.0,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}";
+  END COMPONENT iis_deserializer;
   ATTRIBUTE IP_DEFINITION_SOURCE : STRING;
-  ATTRIBUTE IP_DEFINITION_SOURCE OF ip_design_i2s_serdes_0_0_arch: ARCHITECTURE IS "package_project";
+  ATTRIBUTE IP_DEFINITION_SOURCE OF ip_design_iis_deserializer_0_0_arch: ARCHITECTURE IS "package_project";
 BEGIN
-  U0 : i2s_serdes
+  U0 : iis_deserializer
     PORT MAP (
-      CLK_100M => CLK_100M,
-      SDATA_I => SDATA_I,
-      BCLK => BCLK,
+      CLK_100MHZ => CLK_100MHZ,
+      SCLK => SCLK,
       LRCLK => LRCLK,
-      SDATA_O => SDATA_O
+      SDATA => SDATA,
+      EN => EN,
+      LDATA => LDATA,
+      RDATA => RDATA,
+      VALID => VALID
     );
-END ip_design_i2s_serdes_0_0_arch;
+END ip_design_iis_deserializer_0_0_arch;

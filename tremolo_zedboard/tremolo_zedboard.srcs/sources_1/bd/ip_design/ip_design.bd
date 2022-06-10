@@ -21,7 +21,9 @@
       },
       "rst_ps7_0_100M": "",
       "axi_gpio_0": "",
-      "i2s_serdes_0": ""
+      "i2s_clocking_0": "",
+      "iis_deserializer_0": "",
+      "iis_serializer_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -1328,6 +1330,36 @@
           }
         },
         "interface_nets": {
+          "xbar_to_m01_couplers": {
+            "interface_ports": [
+              "xbar/M01_AXI",
+              "m01_couplers/S_AXI"
+            ]
+          },
+          "xbar_to_m02_couplers": {
+            "interface_ports": [
+              "xbar/M02_AXI",
+              "m02_couplers/S_AXI"
+            ]
+          },
+          "m02_couplers_to_ps7_0_axi_periph": {
+            "interface_ports": [
+              "M02_AXI",
+              "m02_couplers/M_AXI"
+            ]
+          },
+          "xbar_to_m00_couplers": {
+            "interface_ports": [
+              "xbar/M00_AXI",
+              "m00_couplers/S_AXI"
+            ]
+          },
+          "m01_couplers_to_ps7_0_axi_periph": {
+            "interface_ports": [
+              "M01_AXI",
+              "m01_couplers/M_AXI"
+            ]
+          },
           "ps7_0_axi_periph_to_s00_couplers": {
             "interface_ports": [
               "S00_AXI",
@@ -1344,36 +1376,6 @@
             "interface_ports": [
               "s00_couplers/M_AXI",
               "xbar/S00_AXI"
-            ]
-          },
-          "xbar_to_m00_couplers": {
-            "interface_ports": [
-              "xbar/M00_AXI",
-              "m00_couplers/S_AXI"
-            ]
-          },
-          "m01_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
-            ]
-          },
-          "xbar_to_m01_couplers": {
-            "interface_ports": [
-              "xbar/M01_AXI",
-              "m01_couplers/S_AXI"
-            ]
-          },
-          "m02_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M02_AXI",
-              "m02_couplers/M_AXI"
-            ]
-          },
-          "xbar_to_m02_couplers": {
-            "interface_ports": [
-              "xbar/M02_AXI",
-              "m02_couplers/S_AXI"
             ]
           }
         },
@@ -1427,9 +1429,17 @@
           }
         }
       },
-      "i2s_serdes_0": {
-        "vlnv": "xilinx.com:user:i2s_serdes:1.0",
-        "xci_name": "ip_design_i2s_serdes_0_0"
+      "i2s_clocking_0": {
+        "vlnv": "xilinx.com:user:i2s_clocking:1.0",
+        "xci_name": "ip_design_i2s_clocking_0_0"
+      },
+      "iis_deserializer_0": {
+        "vlnv": "xilinx.com:user:iis_deserializer:1.0",
+        "xci_name": "ip_design_iis_deserializer_0_0"
+      },
+      "iis_serializer_0": {
+        "vlnv": "xilinx.com:user:iis_serializer:1.0",
+        "xci_name": "ip_design_iis_serializer_0_2"
       }
     },
     "interface_nets": {
@@ -1482,7 +1492,9 @@
           "axi_gpio_0/s_axi_aclk",
           "ps7_0_axi_periph/M01_ACLK",
           "ps7_0_axi_periph/M02_ACLK",
-          "i2s_serdes_0/CLK_100M"
+          "i2s_clocking_0/CLK_100M",
+          "iis_deserializer_0/CLK_100MHZ",
+          "iis_serializer_0/CLK_100MHZ"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -1508,28 +1520,51 @@
           "FCLK_CLK1_0"
         ]
       },
-      "i2s_serdes_0_BCLK": {
+      "i2s_clocking_0_BCLK": {
         "ports": [
-          "i2s_serdes_0/BCLK",
-          "BCLK_0"
+          "i2s_clocking_0/BCLK",
+          "BCLK_0",
+          "iis_deserializer_0/SCLK",
+          "iis_serializer_0/SCLK"
         ]
       },
-      "i2s_serdes_0_LRCLK": {
+      "i2s_clocking_0_LRCLK": {
         "ports": [
-          "i2s_serdes_0/LRCLK",
-          "LRCLK_0"
+          "i2s_clocking_0/LRCLK",
+          "LRCLK_0",
+          "iis_deserializer_0/LRCLK",
+          "iis_serializer_0/LRCLK"
         ]
       },
-      "i2s_serdes_0_SDATA_O": {
+      "i2s_clocking_0_EN": {
         "ports": [
-          "i2s_serdes_0/SDATA_O",
+          "i2s_clocking_0/EN",
+          "iis_deserializer_0/EN",
+          "iis_serializer_0/EN"
+        ]
+      },
+      "iis_deserializer_0_LDATA": {
+        "ports": [
+          "iis_deserializer_0/LDATA",
+          "iis_serializer_0/LDATA"
+        ]
+      },
+      "iis_deserializer_0_RDATA": {
+        "ports": [
+          "iis_deserializer_0/RDATA",
+          "iis_serializer_0/RDATA"
+        ]
+      },
+      "iis_serializer_0_SDATA": {
+        "ports": [
+          "iis_serializer_0/SDATA",
           "SDATA_O_0"
         ]
       },
       "SDATA_I_0_1": {
         "ports": [
           "SDATA_I_0",
-          "i2s_serdes_0/SDATA_I"
+          "iis_deserializer_0/SDATA"
         ]
       }
     },

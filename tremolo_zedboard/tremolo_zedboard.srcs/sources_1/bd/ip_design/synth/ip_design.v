@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Fri Jun 10 15:15:48 2022
+//Date        : Fri Jun 10 15:48:35 2022
 //Host        : DESKTOP-8KPGAVB running 64-bit major release  (build 9200)
 //Command     : generate_target ip_design.bd
 //Design      : ip_design
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "ip_design,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ip_design,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=11,numReposBlks=6,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=2,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "ip_design.hwdef" *) 
+(* CORE_GENERATION_INFO = "ip_design,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ip_design,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=13,numReposBlks=8,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=2,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "ip_design.hwdef" *) 
 module ip_design
    (BCLK_0,
     DDR_addr,
@@ -80,9 +80,12 @@ module ip_design
 
   wire SDATA_I_0_1;
   wire [1:0]axi_gpio_0_GPIO_TRI_I;
-  wire i2s_serdes_0_BCLK;
-  wire i2s_serdes_0_LRCLK;
-  wire i2s_serdes_0_SDATA_O;
+  wire i2s_clocking_0_BCLK;
+  wire i2s_clocking_0_EN;
+  wire i2s_clocking_0_LRCLK;
+  wire [23:0]iis_deserializer_0_LDATA;
+  wire [23:0]iis_deserializer_0_RDATA;
+  wire iis_serializer_0_SDATA;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -170,15 +173,15 @@ module ip_design
   wire ps7_0_axi_periph_M01_AXI_WVALID;
   wire [0:0]rst_ps7_0_100M_peripheral_aresetn;
 
-  assign BCLK_0 = i2s_serdes_0_BCLK;
+  assign BCLK_0 = i2s_clocking_0_BCLK;
   assign FCLK_CLK1_0 = processing_system7_0_FCLK_CLK1;
   assign IIC_1_0_scl_o = processing_system7_0_IIC_1_SCL_O;
   assign IIC_1_0_scl_t = processing_system7_0_IIC_1_SCL_T;
   assign IIC_1_0_sda_o = processing_system7_0_IIC_1_SDA_O;
   assign IIC_1_0_sda_t = processing_system7_0_IIC_1_SDA_T;
-  assign LRCLK_0 = i2s_serdes_0_LRCLK;
+  assign LRCLK_0 = i2s_clocking_0_LRCLK;
   assign SDATA_I_0_1 = SDATA_I_0;
-  assign SDATA_O_0 = i2s_serdes_0_SDATA_O;
+  assign SDATA_O_0 = iis_serializer_0_SDATA;
   assign axi_gpio_0_GPIO_TRI_I = GPIO_0_tri_i[1:0];
   assign processing_system7_0_IIC_1_SCL_I = IIC_1_0_scl_i;
   assign processing_system7_0_IIC_1_SDA_I = IIC_1_0_sda_i;
@@ -203,12 +206,27 @@ module ip_design
         .s_axi_wready(ps7_0_axi_periph_M01_AXI_WREADY),
         .s_axi_wstrb(ps7_0_axi_periph_M01_AXI_WSTRB),
         .s_axi_wvalid(ps7_0_axi_periph_M01_AXI_WVALID));
-  ip_design_i2s_serdes_0_0 i2s_serdes_0
-       (.BCLK(i2s_serdes_0_BCLK),
+  ip_design_i2s_clocking_0_0 i2s_clocking_0
+       (.BCLK(i2s_clocking_0_BCLK),
         .CLK_100M(processing_system7_0_FCLK_CLK0),
-        .LRCLK(i2s_serdes_0_LRCLK),
-        .SDATA_I(SDATA_I_0_1),
-        .SDATA_O(i2s_serdes_0_SDATA_O));
+        .EN(i2s_clocking_0_EN),
+        .LRCLK(i2s_clocking_0_LRCLK));
+  ip_design_iis_deserializer_0_0 iis_deserializer_0
+       (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
+        .EN(i2s_clocking_0_EN),
+        .LDATA(iis_deserializer_0_LDATA),
+        .LRCLK(i2s_clocking_0_LRCLK),
+        .RDATA(iis_deserializer_0_RDATA),
+        .SCLK(i2s_clocking_0_BCLK),
+        .SDATA(SDATA_I_0_1));
+  ip_design_iis_serializer_0_2 iis_serializer_0
+       (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
+        .EN(i2s_clocking_0_EN),
+        .LDATA(iis_deserializer_0_LDATA),
+        .LRCLK(i2s_clocking_0_LRCLK),
+        .RDATA(iis_deserializer_0_RDATA),
+        .SCLK(i2s_clocking_0_BCLK),
+        .SDATA(iis_serializer_0_SDATA));
   ip_design_processing_system7_0_0 processing_system7_0
        (.DDR_Addr(DDR_addr[14:0]),
         .DDR_BankAddr(DDR_ba[2:0]),

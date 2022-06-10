@@ -183,8 +183,14 @@ proc create_root_design { parentCell } {
    CONFIG.GPIO_BOARD_INTERFACE {Custom} \
  ] $axi_gpio_0
 
-  # Create instance: i2s_serdes_0, and set properties
-  set i2s_serdes_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:i2s_serdes:1.0 i2s_serdes_0 ]
+  # Create instance: i2s_clocking_0, and set properties
+  set i2s_clocking_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:i2s_clocking:1.0 i2s_clocking_0 ]
+
+  # Create instance: iis_deserializer_0, and set properties
+  set iis_deserializer_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:iis_deserializer:1.0 iis_deserializer_0 ]
+
+  # Create instance: iis_serializer_0, and set properties
+  set iis_serializer_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:iis_serializer:1.0 iis_serializer_0 ]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
@@ -608,11 +614,14 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M01_AXI [get_bd_intf_pins axi_gpio_0/S_AXI] [get_bd_intf_pins ps7_0_axi_periph/M01_AXI]
 
   # Create port connections
-  connect_bd_net -net SDATA_I_0_1 [get_bd_ports SDATA_I_0] [get_bd_pins i2s_serdes_0/SDATA_I]
-  connect_bd_net -net i2s_serdes_0_BCLK [get_bd_ports BCLK_0] [get_bd_pins i2s_serdes_0/BCLK]
-  connect_bd_net -net i2s_serdes_0_LRCLK [get_bd_ports LRCLK_0] [get_bd_pins i2s_serdes_0/LRCLK]
-  connect_bd_net -net i2s_serdes_0_SDATA_O [get_bd_ports SDATA_O_0] [get_bd_pins i2s_serdes_0/SDATA_O]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins i2s_serdes_0/CLK_100M] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+  connect_bd_net -net SDATA_I_0_1 [get_bd_ports SDATA_I_0] [get_bd_pins iis_deserializer_0/SDATA]
+  connect_bd_net -net i2s_clocking_0_BCLK [get_bd_ports BCLK_0] [get_bd_pins i2s_clocking_0/BCLK] [get_bd_pins iis_deserializer_0/SCLK] [get_bd_pins iis_serializer_0/SCLK]
+  connect_bd_net -net i2s_clocking_0_EN [get_bd_pins i2s_clocking_0/EN] [get_bd_pins iis_deserializer_0/EN] [get_bd_pins iis_serializer_0/EN]
+  connect_bd_net -net i2s_clocking_0_LRCLK [get_bd_ports LRCLK_0] [get_bd_pins i2s_clocking_0/LRCLK] [get_bd_pins iis_deserializer_0/LRCLK] [get_bd_pins iis_serializer_0/LRCLK]
+  connect_bd_net -net iis_deserializer_0_LDATA [get_bd_pins iis_deserializer_0/LDATA] [get_bd_pins iis_serializer_0/LDATA]
+  connect_bd_net -net iis_deserializer_0_RDATA [get_bd_pins iis_deserializer_0/RDATA] [get_bd_pins iis_serializer_0/RDATA]
+  connect_bd_net -net iis_serializer_0_SDATA [get_bd_ports SDATA_O_0] [get_bd_pins iis_serializer_0/SDATA]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins i2s_clocking_0/CLK_100M] [get_bd_pins iis_deserializer_0/CLK_100MHZ] [get_bd_pins iis_serializer_0/CLK_100MHZ] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_CLK1 [get_bd_ports FCLK_CLK1_0] [get_bd_pins processing_system7_0/FCLK_CLK1]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
