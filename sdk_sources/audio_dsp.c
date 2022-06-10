@@ -16,13 +16,5 @@ int main(void)
 	AudioConfigureJacks();
 
 	xil_printf("ADAU1761 configured\n\r");
-
-	/* Initialise GPIO */
-	gpio_init();
-
-	xil_printf("GPIO and NCO peripheral configured\r\n");
-
 }
-
-
 

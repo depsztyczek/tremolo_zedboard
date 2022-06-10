@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Thu Jun  9 08:37:21 2022
+//Date        : Fri Jun 10 15:15:48 2022
 //Host        : DESKTOP-8KPGAVB running 64-bit major release  (build 9200)
 //Command     : generate_target ip_design_wrapper.bd
 //Design      : ip_design_wrapper
@@ -38,9 +38,7 @@ module ip_design_wrapper
     IIC_1_0_sda_io,
     LRCLK_0,
     SDATA_I_0,
-    SDATA_O_0,
-    btns_5bits_tri_i,
-    sws_8bits_tri_i);
+    SDATA_O_0);
   output BCLK_0;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
@@ -70,8 +68,6 @@ module ip_design_wrapper
   output LRCLK_0;
   input SDATA_I_0;
   output SDATA_O_0;
-  input [4:0]btns_5bits_tri_i;
-  input [7:0]sws_8bits_tri_i;
 
   wire BCLK_0;
   wire [14:0]DDR_addr;
@@ -108,8 +104,6 @@ module ip_design_wrapper
   wire LRCLK_0;
   wire SDATA_I_0;
   wire SDATA_O_0;
-  wire [4:0]btns_5bits_tri_i;
-  wire [7:0]sws_8bits_tri_i;
 
   IOBUF IIC_1_0_scl_iobuf
        (.I(IIC_1_0_scl_o),
@@ -154,7 +148,5 @@ module ip_design_wrapper
         .IIC_1_0_sda_t(IIC_1_0_sda_t),
         .LRCLK_0(LRCLK_0),
         .SDATA_I_0(SDATA_I_0),
-        .SDATA_O_0(SDATA_O_0),
-        .btns_5bits_tri_i(btns_5bits_tri_i),
-        .sws_8bits_tri_i(sws_8bits_tri_i));
+        .SDATA_O_0(SDATA_O_0));
 endmodule
