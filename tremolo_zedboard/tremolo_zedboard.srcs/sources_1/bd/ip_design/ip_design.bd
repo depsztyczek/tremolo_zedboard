@@ -23,7 +23,10 @@
       "axi_gpio_0": "",
       "i2s_clocking_0": "",
       "iis_deserializer_0": "",
-      "iis_serializer_0": ""
+      "iis_serializer_0": "",
+      "cordic_0": "",
+      "tremolo_1": "",
+      "axi_fifo_mm_s": ""
     },
     "interface_ports": {
       "DDR": {
@@ -1330,12 +1333,6 @@
           }
         },
         "interface_nets": {
-          "xbar_to_m01_couplers": {
-            "interface_ports": [
-              "xbar/M01_AXI",
-              "m01_couplers/S_AXI"
-            ]
-          },
           "xbar_to_m02_couplers": {
             "interface_ports": [
               "xbar/M02_AXI",
@@ -1348,16 +1345,10 @@
               "m02_couplers/M_AXI"
             ]
           },
-          "xbar_to_m00_couplers": {
+          "xbar_to_m01_couplers": {
             "interface_ports": [
-              "xbar/M00_AXI",
-              "m00_couplers/S_AXI"
-            ]
-          },
-          "m01_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
+              "xbar/M01_AXI",
+              "m01_couplers/S_AXI"
             ]
           },
           "ps7_0_axi_periph_to_s00_couplers": {
@@ -1366,16 +1357,28 @@
               "s00_couplers/S_AXI"
             ]
           },
+          "s00_couplers_to_xbar": {
+            "interface_ports": [
+              "s00_couplers/M_AXI",
+              "xbar/S00_AXI"
+            ]
+          },
           "m00_couplers_to_ps7_0_axi_periph": {
             "interface_ports": [
               "M00_AXI",
               "m00_couplers/M_AXI"
             ]
           },
-          "s00_couplers_to_xbar": {
+          "m01_couplers_to_ps7_0_axi_periph": {
             "interface_ports": [
-              "s00_couplers/M_AXI",
-              "xbar/S00_AXI"
+              "M01_AXI",
+              "m01_couplers/M_AXI"
+            ]
+          },
+          "xbar_to_m00_couplers": {
+            "interface_ports": [
+              "xbar/M00_AXI",
+              "m00_couplers/S_AXI"
             ]
           }
         },
@@ -1440,6 +1443,40 @@
       "iis_serializer_0": {
         "vlnv": "xilinx.com:user:iis_serializer:1.0",
         "xci_name": "ip_design_iis_serializer_0_2"
+      },
+      "cordic_0": {
+        "vlnv": "xilinx.com:ip:cordic:6.0",
+        "xci_name": "ip_design_cordic_0_0",
+        "parameters": {
+          "Data_Format": {
+            "value": "SignedFraction"
+          },
+          "Functional_Selection": {
+            "value": "Sin_and_Cos"
+          },
+          "Input_Width": {
+            "value": "32"
+          },
+          "Output_Width": {
+            "value": "24"
+          },
+          "Pipelining_Mode": {
+            "value": "No_Pipelining"
+          }
+        }
+      },
+      "tremolo_1": {
+        "vlnv": "xilinx.com:user:tremolo:1.0",
+        "xci_name": "ip_design_tremolo_1_0"
+      },
+      "axi_fifo_mm_s": {
+        "vlnv": "xilinx.com:ip:axi_fifo_mm_s:4.2",
+        "xci_name": "ip_design_axi_fifo_mm_s_0",
+        "parameters": {
+          "C_USE_RX_DATA": {
+            "value": "0"
+          }
+        }
       }
     },
     "interface_nets": {
@@ -1455,10 +1492,10 @@
           "processing_system7_0/DDR"
         ]
       },
-      "processing_system7_0_FIXED_IO": {
+      "processing_system7_0_IIC_1": {
         "interface_ports": [
-          "FIXED_IO",
-          "processing_system7_0/FIXED_IO"
+          "IIC_1_0",
+          "processing_system7_0/IIC_1"
         ]
       },
       "axi_gpio_0_GPIO": {
@@ -1467,16 +1504,28 @@
           "axi_gpio_0/GPIO"
         ]
       },
-      "processing_system7_0_IIC_1": {
+      "processing_system7_0_FIXED_IO": {
         "interface_ports": [
-          "IIC_1_0",
-          "processing_system7_0/IIC_1"
+          "FIXED_IO",
+          "processing_system7_0/FIXED_IO"
         ]
       },
       "processing_system7_0_M_AXI_GP0": {
         "interface_ports": [
           "processing_system7_0/M_AXI_GP0",
           "ps7_0_axi_periph/S00_AXI"
+        ]
+      },
+      "ps7_0_axi_periph_M00_AXI": {
+        "interface_ports": [
+          "ps7_0_axi_periph/M00_AXI",
+          "axi_fifo_mm_s/S_AXI"
+        ]
+      },
+      "axi_fifo_mm_s_AXI_STR_TXD": {
+        "interface_ports": [
+          "axi_fifo_mm_s/AXI_STR_TXD",
+          "cordic_0/S_AXIS_PHASE"
         ]
       }
     },
@@ -1494,7 +1543,9 @@
           "ps7_0_axi_periph/M02_ACLK",
           "i2s_clocking_0/CLK_100M",
           "iis_deserializer_0/CLK_100MHZ",
-          "iis_serializer_0/CLK_100MHZ"
+          "iis_serializer_0/CLK_100MHZ",
+          "tremolo_1/clk",
+          "axi_fifo_mm_s/s_axi_aclk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -1511,7 +1562,8 @@
           "ps7_0_axi_periph/ARESETN",
           "axi_gpio_0/s_axi_aresetn",
           "ps7_0_axi_periph/M01_ARESETN",
-          "ps7_0_axi_periph/M02_ARESETN"
+          "ps7_0_axi_periph/M02_ARESETN",
+          "axi_fifo_mm_s/s_axi_aresetn"
         ]
       },
       "processing_system7_0_FCLK_CLK1": {
@@ -1540,19 +1592,8 @@
         "ports": [
           "i2s_clocking_0/EN",
           "iis_deserializer_0/EN",
-          "iis_serializer_0/EN"
-        ]
-      },
-      "iis_deserializer_0_LDATA": {
-        "ports": [
-          "iis_deserializer_0/LDATA",
-          "iis_serializer_0/LDATA"
-        ]
-      },
-      "iis_deserializer_0_RDATA": {
-        "ports": [
-          "iis_deserializer_0/RDATA",
-          "iis_serializer_0/RDATA"
+          "iis_serializer_0/EN",
+          "tremolo_1/en"
         ]
       },
       "iis_serializer_0_SDATA": {
@@ -1566,6 +1607,61 @@
           "SDATA_I_0",
           "iis_deserializer_0/SDATA"
         ]
+      },
+      "tremolo_1_output_angle_valid": {
+        "ports": [
+          "tremolo_1/output_angle_valid",
+          "cordic_0/s_axis_phase_tvalid"
+        ]
+      },
+      "tremolo_1_angle_out": {
+        "ports": [
+          "tremolo_1/angle_out",
+          "cordic_0/s_axis_phase_tdata"
+        ]
+      },
+      "cordic_0_m_axis_dout_tdata": {
+        "ports": [
+          "cordic_0/m_axis_dout_tdata",
+          "tremolo_1/sin_in"
+        ]
+      },
+      "cordic_0_m_axis_dout_tvalid": {
+        "ports": [
+          "cordic_0/m_axis_dout_tvalid",
+          "tremolo_1/input_sin_valid"
+        ]
+      },
+      "iis_deserializer_0_VALID": {
+        "ports": [
+          "iis_deserializer_0/VALID",
+          "tremolo_1/input_data_valid",
+          "tremolo_1/right_in"
+        ]
+      },
+      "iis_deserializer_0_LDATA": {
+        "ports": [
+          "iis_deserializer_0/LDATA",
+          "tremolo_1/left_in"
+        ]
+      },
+      "tremolo_1_left_out": {
+        "ports": [
+          "tremolo_1/left_out",
+          "iis_serializer_0/LDATA"
+        ]
+      },
+      "tremolo_1_right_out": {
+        "ports": [
+          "tremolo_1/right_out",
+          "iis_serializer_0/RDATA"
+        ]
+      },
+      "rst_ps7_0_100M_peripheral_reset": {
+        "ports": [
+          "rst_ps7_0_100M/peripheral_reset",
+          "tremolo_1/rst"
+        ]
       }
     },
     "addressing": {
@@ -1575,6 +1671,11 @@
             "range": "4G",
             "width": "32",
             "segments": {
+              "SEG_axi_fifo_mm_s_Mem0": {
+                "address_block": "/axi_fifo_mm_s/S_AXI/Mem0",
+                "offset": "0x43C00000",
+                "range": "64K"
+              },
               "SEG_axi_gpio_0_Reg": {
                 "address_block": "/axi_gpio_0/S_AXI/Reg",
                 "offset": "0x41200000",
