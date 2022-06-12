@@ -26,26 +26,9 @@
 #include "audio.h"
 
 /* ---------------------------------------------------------------------------- *
- * 							Prototype Functions									*
- * ---------------------------------------------------------------------------- */
-void menu();
-void audio_stream();
-void tremolo_stream();
-unsigned char gpio_init();
-
-/* ---------------------------------------------------------------------------- *
  * 						Redefinitions from xparameters.h 						*
  * ---------------------------------------------------------------------------- */
 #define UART_BASEADDR XPAR_PS7_UART_1_BASEADDR
-
-#define BUTTON_SWITCH_BASE XPAR_GPIO_1_BASEADDR
-#define BUTTON_SWITCH_ID XPAR_GPIO_1_DEVICE_ID
-
-/* ---------------------------------------------------------------------------- *
- * 							Define GPIO Channels								*
- * ---------------------------------------------------------------------------- */
-#define BUTTON_CHANNEL 1
-#define SWITCH_CHANNEL 2
 
 /* ---------------------------------------------------------------------------- *
  * 							Audio Scaling Factor								*
