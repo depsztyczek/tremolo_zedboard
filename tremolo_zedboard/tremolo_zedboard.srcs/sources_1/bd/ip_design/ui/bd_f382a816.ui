@@ -42,12 +42,12 @@ preplace netloc iis_deserializer_0_RDATA 1 2 1 730 440n
 preplace netloc iis_deserializer_0_VALID 1 2 1 820 460n
 preplace netloc ps7_0_axi_periph_M01_AXI 1 2 1 770 400n
 preplace netloc processing_system7_0_DDR 1 3 2 NJ 60 NJ
-preplace netloc processing_system7_0_IIC_1 1 3 2 NJ 100 NJ
-preplace netloc axi_gpio_0_GPIO 1 3 2 NJ 420 NJ
-preplace netloc processing_system7_0_FIXED_IO 1 3 2 NJ 80 NJ
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 3 400 330 NJ 330 1310
 preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 730 730n
+preplace netloc axi_gpio_0_GPIO 1 3 2 NJ 420 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 3 400 330 NJ 330 1310
+preplace netloc processing_system7_0_IIC_1 1 3 2 NJ 100 NJ
 preplace netloc axi_fifo_mm_s_AXI_STR_TXD 1 3 1 1300 650n
+preplace netloc processing_system7_0_FIXED_IO 1 3 2 NJ 80 NJ
 levelinfo -pg 1 0 200 580 1050 1530 1760
 pagesize -pg 1 -db -bbox -sgen -130 0 1910 1130
 "

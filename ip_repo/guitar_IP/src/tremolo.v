@@ -73,12 +73,12 @@ always @(posedge clk) begin: data_process
                     right_ch_temp <=  (sin_in * right_ch_temp);
                 end
                 2: begin
-                    left_ch_temp  <= -(sin_in * left_ch_temp );
-                    right_ch_temp <= -(sin_in * right_ch_temp);
+                    left_ch_temp  <= (-sin_in * left_ch_temp );
+                    right_ch_temp <= (-sin_in * right_ch_temp);
                 end
                 3: begin
-                    left_ch_temp  <= -(sin_in * left_ch_temp );
-                    right_ch_temp <= -(sin_in * right_ch_temp);
+                    left_ch_temp  <= (-sin_in * left_ch_temp );
+                    right_ch_temp <= (-sin_in * right_ch_temp);
                 end
             endcase
             //         48                24            48(47:24: same zera, 23:0 dane)
