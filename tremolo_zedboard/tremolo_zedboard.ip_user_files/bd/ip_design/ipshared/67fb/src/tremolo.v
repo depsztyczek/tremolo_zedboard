@@ -20,17 +20,20 @@ module tremolo(
 //48k sampling frequency
 //smallest step:(360 deg) -> 6.28319 rad/48k = 0.0001308998 -> fxp 32_29 notation
 localparam SMALLEST_STEP = 32'h00011284; //for 1hz frequency, 6.3
+parameter logic [23:0] MODULATION_DEPTH  = 24'h333333; //this is long, but the value in it is like 0.4 for 24 bit two's complement
 parameter  TREMOLO_FREQ = 1; ///in hz
+
+localparam logic [23:0] MAX_POSITIVE = 24'h7FFFFF;
 localparam ANGLE_STEP = SMALLEST_STEP * TREMOLO_FREQ;
 localparam QUARTER_HEX = 32'h3243eb80; //12k * SMALLEST_STEP
 
 logic [1:0] quarter;
 
-logic [47:0] left_ch_temp;
-logic [47:0] right_ch_temp;
+logic [71:0] left_ch_temp;
+logic [71:0] right_ch_temp;
 
-assign left_out = left_ch_temp[45:22];
-assign right_out = right_ch_temp[45:22];
+assign left_out = left_ch_temp[68:45];
+assign right_out = right_ch_temp[68:45];
 
 always @(posedge clk) begin: data_process
     if(rst == 1'b1) begin
@@ -65,20 +68,20 @@ always @(posedge clk) begin: data_process
         if((input_sin_valid == '1) && (output_angle_valid == '1)) begin: calc_data
             case(quarter)
                 0: begin
-                    left_ch_temp  <=  (sin_in * left_ch_temp );
-                    right_ch_temp <=  (sin_in * right_ch_temp);
+                    left_ch_temp  <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * left_ch_temp ); //
+                    right_ch_temp <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * right_ch_temp );
                 end
                 1: begin
-                    left_ch_temp  <=  (sin_in * left_ch_temp );
-                    right_ch_temp <=  (sin_in * right_ch_temp);
+                    left_ch_temp  <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * left_ch_temp );
+                    right_ch_temp <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * right_ch_temp );
                 end
                 2: begin
-                    left_ch_temp  <= -(sin_in * left_ch_temp );
-                    right_ch_temp <= -(sin_in * right_ch_temp);
+                    left_ch_temp  <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in))  * left_ch_temp );
+                    right_ch_temp <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in))  * right_ch_temp );
                 end
                 3: begin
-                    left_ch_temp  <= -(sin_in * left_ch_temp );
-                    right_ch_temp <= -(sin_in * right_ch_temp);
+                    left_ch_temp  <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in) ) * left_ch_temp );
+                    right_ch_temp <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in) ) * right_ch_temp );
                 end
             endcase
             //         48                24            48(47:24: same zera, 23:0 dane)
@@ -93,8 +96,8 @@ always @(posedge clk) begin: data_process
 
     else if(en == '0) begin
         angle_out <= '0;
-        left_ch_temp[45:22] <= left_in;
-        right_ch_temp[45:22] <= right_in;
+        left_ch_temp[68:45] <= left_in;
+        right_ch_temp[68:45] <= right_in;
         output_data_valid <= '1;
         output_angle_valid <= '0;
     end
