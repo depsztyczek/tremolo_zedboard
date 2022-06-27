@@ -30,4 +30,6 @@ It'll create test samples for both left and right audio channels and sin functio
 5. Module tremolo.v is implemented - it takes the samples from I2S deserializer, modulates them, and sends them back to the serializer. It uses the cordic algorithm for sine wave generation. It is synthezible.
 6. The tremolo modulation works in hardware, but contains some artifacts - the signal is saturated, and some samples are lost due to timing issues - some debugging is still needed.
 
+❗ The current development branch is called tremolo_hw. ❗
+
 To see a demo of our solution, download https://we.tl/t-ktl1BE7T6J file.
