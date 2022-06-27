@@ -1,5 +1,6 @@
 # *********************************** imports *************************************************************************
 import numpy as np
+import os
 # import matplotlib.pyplot as plt
 
 # ********************************** functions ************************************************************************
@@ -9,7 +10,9 @@ def neg_int_to_U2_hex_str(neg_int, int_bits):
 
 def convert_data_to_q2_0_23_string_file(data, filename): #take input array in float and write it in sq2 0.23
 
-    with open(("./" + filename), "w") as file:
+    dirname = os.path.dirname(__file__)
+
+    with open(os.path.join(dirname, filename), "w") as file:
         for sample in data:
             if sample > max_value:
                sample = max_value
