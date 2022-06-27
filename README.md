@@ -29,3 +29,6 @@ To run tremolo effect example in Python:
 5. Run main.py script
 It'll generate test_song_tremolo.wav file.
 6. Play generated test_song_tremolo.wav
+
+
+To see a demo of our solution, download https://we.tl/t-ktl1BE7T6J file.
