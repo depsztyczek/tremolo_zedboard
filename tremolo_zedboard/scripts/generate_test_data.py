@@ -1,6 +1,7 @@
 # *********************************** imports *************************************************************************
 import numpy as np
 import os
+from utils.parameters import freq_cos, data_path
 # import matplotlib.pyplot as plt
 
 # ********************************** functions ************************************************************************
@@ -9,10 +10,8 @@ def neg_int_to_U2_hex_str(neg_int, int_bits):
     return f"{(neg_int & ((1 << int_bits) - 1)):0{6}x}\r"
 
 def convert_data_to_q2_0_23_string_file(data, filename): #take input array in float and write it in sq2 0.23
-
-    dirname = os.path.dirname(__file__)
-
-    with open(os.path.join(dirname, filename), "w") as file:
+    
+    with open(os.path.join(data_path, filename), "w") as file:
         for sample in data:
             if sample > max_value:
                sample = max_value
@@ -28,10 +27,9 @@ def convert_data_to_q2_0_23_string_file(data, filename): #take input array in fl
 if __name__ == '__main__':
 
    time = np.arange(0, 1, 1/48000) 
-   f_cos = 240
 
    sin_in = np.sin(2 * np.pi * time)
-   left_right_in = np.cos(2 * np.pi * time * f_cos)
+   left_right_in = np.cos(2 * np.pi * time * freq_cos)
    max_value = 0.9999998807907104 #max_value available in notation Signed Q2 0.23
 
    # plt.plot(time, sin_in)
@@ -40,6 +38,6 @@ if __name__ == '__main__':
    # plt.show()
 
 
-   convert_data_to_q2_0_23_string_file(sin_in, 'tremolo_zedboard.sim\\sim_1\\behav\\xsim\\sin_in.data')
-   convert_data_to_q2_0_23_string_file(left_right_in, 'tremolo_zedboard.sim\\sim_1\\behav\\xsim\\left_right_in.data')
+   convert_data_to_q2_0_23_string_file(sin_in, 'sin_in.data')
+   convert_data_to_q2_0_23_string_file(left_right_in, 'left_right_in.data')
 #                      if no such directory, run behavioral simulation first, should work!!!
