@@ -26,7 +26,7 @@ It'll create test samples for both left and right audio channels and sin functio
 1. Simulated the expected behaviour in python
 2. Implemented I2S codec drivers on FPGA - audio samples were accessed through AXI, and modulation of audio was done in the microcontroller in C code. At this stage, the planned function was working correctly - we went back to implement the module in FPGA to comply with the curriculum behind SDUP.
 3. Testbench is implemented - we can see plots of ideal modulated cosine wave, versus the actual one that we get from the test.
-4. I2S audio loopback works caorrectly on hardware, without the use of microcontroller.
+4. I2S audio loopback works correctly on hardware, without the use of microcontroller.
 5. Module tremolo.v is implemented - it takes the samples from I2S deserializer, modulates them, and sends them back to the serializer. It uses the cordic algorithm for sine wave generation. It is synthezible.
 6. The tremolo modulation works in hardware, but contains some artifacts - the signal is saturated, and some samples are lost due to timing issues - some debugging is still needed.
 
