@@ -1,0 +1,4 @@
+scipy
+numpy
+matplotlib
+playsound==1.2.2
