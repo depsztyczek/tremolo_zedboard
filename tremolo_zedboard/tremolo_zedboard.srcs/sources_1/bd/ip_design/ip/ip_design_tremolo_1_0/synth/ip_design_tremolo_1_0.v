@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 9
+// IP Revision: 11
 
 (* X_CORE_INFO = "tremolo,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "ip_design_tremolo_1_0,tremolo,{}" *)
-(* CORE_GENERATION_INFO = "ip_design_tremolo_1_0,tremolo,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=tremolo,x_ipVersion=1.0,x_ipCoreRevision=9,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TREMOLO_FREQ=1,MODULATION_DEPTH=333333}" *)
+(* CORE_GENERATION_INFO = "ip_design_tremolo_1_0,tremolo,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=tremolo,x_ipVersion=1.0,x_ipCoreRevision=11,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TREMOLO_FREQ=1,MODULATION_DEPTH=333333}" *)
 (* IP_DEFINITION_SOURCE = "package_project" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module ip_design_tremolo_1_0 (

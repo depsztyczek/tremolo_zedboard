@@ -642,6 +642,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net cordic_0_m_axis_dout_tdata [get_bd_pins cordic_0/m_axis_dout_tdata] [get_bd_pins tremolo_1/sin_in]
   connect_bd_net -net cordic_0_m_axis_dout_tvalid [get_bd_pins cordic_0/m_axis_dout_tvalid] [get_bd_pins tremolo_1/input_sin_valid]
   connect_bd_net -net i2s_clocking_0_BCLK [get_bd_ports BCLK_0] [get_bd_pins i2s_clocking_0/BCLK] [get_bd_pins iis_deserializer_0/SCLK] [get_bd_pins iis_serializer_0/SCLK]
+  connect_bd_net -net i2s_clocking_0_EN [get_bd_pins i2s_clocking_0/EN] [get_bd_pins iis_deserializer_0/EN] [get_bd_pins iis_serializer_0/EN] [get_bd_pins tremolo_1/en]
   connect_bd_net -net i2s_clocking_0_LRCLK [get_bd_ports LRCLK_0] [get_bd_pins i2s_clocking_0/LRCLK] [get_bd_pins iis_deserializer_0/LRCLK] [get_bd_pins iis_serializer_0/LRCLK]
   connect_bd_net -net iis_deserializer_0_LDATA [get_bd_pins iis_deserializer_0/LDATA] [get_bd_pins tremolo_1/left_in]
   connect_bd_net -net iis_deserializer_0_RDATA [get_bd_pins iis_deserializer_0/RDATA] [get_bd_pins tremolo_1/right_in]

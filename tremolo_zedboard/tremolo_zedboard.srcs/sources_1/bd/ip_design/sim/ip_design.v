@@ -1,8 +1,8 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Sun Jun 19 23:11:59 2022
-//Host        : wojtek running 64-bit major release  (build 9200)
+//Date        : Thu Jun 30 20:00:47 2022
+//Host        : DESKTOP-8KPGAVB running 64-bit major release  (build 9200)
 //Command     : generate_target ip_design.bd
 //Design      : ip_design
 //Purpose     : IP block netlist
@@ -83,6 +83,7 @@ module ip_design
   wire [47:0]cordic_0_m_axis_dout_tdata;
   wire cordic_0_m_axis_dout_tvalid;
   wire i2s_clocking_0_BCLK;
+  wire i2s_clocking_0_EN;
   wire i2s_clocking_0_LRCLK;
   wire [23:0]iis_deserializer_0_LDATA;
   wire [23:0]iis_deserializer_0_RDATA;
@@ -260,10 +261,11 @@ module ip_design
   ip_design_i2s_clocking_0_0 i2s_clocking_0
        (.BCLK(i2s_clocking_0_BCLK),
         .CLK_100M(processing_system7_0_FCLK_CLK0),
+        .EN(i2s_clocking_0_EN),
         .LRCLK(i2s_clocking_0_LRCLK));
   ip_design_iis_deserializer_0_0 iis_deserializer_0
        (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
-        .EN(1'b0),
+        .EN(i2s_clocking_0_EN),
         .LDATA(iis_deserializer_0_LDATA),
         .LRCLK(i2s_clocking_0_LRCLK),
         .RDATA(iis_deserializer_0_RDATA),
@@ -272,7 +274,7 @@ module ip_design
         .VALID(iis_deserializer_0_VALID));
   ip_design_iis_serializer_0_2 iis_serializer_0
        (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
-        .EN(1'b0),
+        .EN(i2s_clocking_0_EN),
         .LDATA(tremolo_1_left_out),
         .LRCLK(i2s_clocking_0_LRCLK),
         .RDATA(tremolo_1_right_out),
@@ -451,7 +453,7 @@ module ip_design
   ip_design_tremolo_1_0 tremolo_1
        (.angle_out(tremolo_1_angle_out),
         .clk(processing_system7_0_FCLK_CLK0),
-        .en(1'b0),
+        .en(i2s_clocking_0_EN),
         .input_data_valid(iis_deserializer_0_VALID),
         .input_sin_valid(cordic_0_m_axis_dout_tvalid),
         .left_in(iis_deserializer_0_LDATA),
