@@ -87,7 +87,7 @@ module tremolo_tb(
     end: clk_gen  
   
       
-  tremolo_0 tremolo_mine (
+  tremolo tremolo_mine (
         .clk(clk100M),
         .rst(rst),
         .en(1'b1),

@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 11
+// IP Revision: 16
 
 `timescale 1ns/1ps
 
@@ -63,11 +63,12 @@ module ip_design_tremolo_1_0 (
   left_in,
   right_in,
   sin_in,
+  cos_in,
   left_out,
   right_out,
   output_data_valid,
-  output_angle_valid,
-  angle_out
+  angle_out,
+  output_angle_valid
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, ASSOCIATED_RESET rst, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN ip_design_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
@@ -81,16 +82,17 @@ input wire input_data_valid;
 input wire input_sin_valid;
 input wire [23 : 0] left_in;
 input wire [23 : 0] right_in;
-input wire [23 : 0] sin_in;
+input wire [31 : 0] sin_in;
+input wire [31 : 0] cos_in;
 output wire [23 : 0] left_out;
 output wire [23 : 0] right_out;
 output wire output_data_valid;
-output wire output_angle_valid;
 output wire [31 : 0] angle_out;
+output wire output_angle_valid;
 
   tremolo #(
-    .TREMOLO_FREQ(1),
-    .MODULATION_DEPTH(333333)
+    .MODULATION_DEPTH('B000001010001011000010101),
+    .TREMOLO_FREQ(1)
   ) inst (
     .clk(clk),
     .rst(rst),
@@ -100,10 +102,11 @@ output wire [31 : 0] angle_out;
     .left_in(left_in),
     .right_in(right_in),
     .sin_in(sin_in),
+    .cos_in(cos_in),
     .left_out(left_out),
     .right_out(right_out),
     .output_data_valid(output_data_valid),
-    .output_angle_valid(output_angle_valid),
-    .angle_out(angle_out)
+    .angle_out(angle_out),
+    .output_angle_valid(output_angle_valid)
   );
 endmodule

@@ -7,7 +7,5 @@ vhdl xil_defaultlib  \
 "../../../bd/ip_design/ip/ip_design_iis_deserializer_0_0/sim/ip_design_iis_deserializer_0_0.vhd" \
 "../../../bd/ip_design/ipshared/5536/src/i2s_serializer.vhd" \
 "../../../bd/ip_design/ip/ip_design_iis_serializer_0_2/sim/ip_design_iis_serializer_0_2.vhd" \
-"../../../bd/ip_design/ip/ip_design_cordic_0_0/sim/ip_design_cordic_0_0.vhd" \
-"../../../bd/ip_design/ip/ip_design_axi_fifo_mm_s_0/sim/ip_design_axi_fifo_mm_s_0.vhd" \
 
 nosort

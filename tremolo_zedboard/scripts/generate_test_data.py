@@ -11,13 +11,13 @@ def neg_int_to_U2_hex_str(neg_int, int_bits):
 
 def convert_data_to_q2_0_23_string_file(data, filename): #take input array in float and write it in sq2 0.23
     
-    with open(os.path.join(data_path, filename), "w") as file:
+    with open(filename, "w") as file:
         for sample in data:
             if sample > max_value:
                sample = max_value
-            int_val = int(sample*(2**23)) #converted to q2 0.23
+            int_val = int(sample*(2**30)) #converted to q2 0.23
             if(int_val < 0):
-               hex_string = neg_int_to_U2_hex_str(neg_int=int_val, int_bits=24)
+               hex_string = neg_int_to_U2_hex_str(neg_int=int_val, int_bits=32)
             else:
                hex_string = f"{int_val:x}\r"
             file.write(hex_string)

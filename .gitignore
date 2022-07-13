@@ -28,6 +28,9 @@
 
 ## others
 unisims
+.idea
+*.data
+__pycache__
 
 ## C-files
 *.elf
