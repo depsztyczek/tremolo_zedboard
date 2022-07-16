@@ -80,19 +80,19 @@
   "../../../bd/ip_design/ip/ip_design_iis_serializer_0_2/sim/ip_design_iis_serializer_0_2.vhd" \
 -endlib
 -makelib ies_lib/xil_defaultlib -sv \
-  "../../../bd/ip_design/ipshared/a1aa/src/tremolo.v" \
+  "../../../bd/ip_design/ipshared/3cd9/src/tremolo.v" \
 -endlib
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/ip_design/ip/ip_design_tremolo_1_0/sim/ip_design_tremolo_1_0.v" \
-  "../../../bd/ip_design/ipshared/2c8f/src/cordic.v" \
+  "../../../bd/ip_design/ipshared/8997/src/cordic.v" \
   "../../../bd/ip_design/ip/ip_design_cordic_0_1/sim/ip_design_cordic_0_1.v" \
-  "../../../bd/ip_design/sim/ip_design.v" \
 -endlib
 -makelib ies_lib/axi_protocol_converter_v2_1_19 \
   "../../../../tremolo_zedboard.srcs/sources_1/bd/ip_design/ipshared/c83a/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
 -endlib
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/ip_design/ip/ip_design_auto_pc_0/sim/ip_design_auto_pc_0.v" \
+  "../../../bd/ip_design/sim/ip_design.v" \
 -endlib
 -makelib ies_lib/xil_defaultlib \
   glbl.v

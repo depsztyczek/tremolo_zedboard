@@ -53,6 +53,8 @@ output [31:0] cos_out;
 output [31:0] sin_out;
 output valid_out;
 
+reg previous_start, previous_start_nxt = 0;
+
 wire [31:0] cos_out = cos;
 wire [31:0] sin_out = sin;
 wire valid_out = valid;
@@ -77,6 +79,7 @@ always @(posedge clock) begin
         count <= 0;
         state <= 0;
         valid <= 0;
+        previous_start <= 0;
     end else begin
         cos <= cos_next;
         sin <= sin_next;
@@ -84,6 +87,7 @@ always @(posedge clock) begin
         count <= count_next;
         state <= state_next;
         valid <= out_valid_next;
+        previous_start <= previous_start_nxt;
     end
 end
 
@@ -95,7 +99,7 @@ always @* begin
     angle_next = angle;
     count_next = count;
     state_next = state;
-    
+        
     if (state) begin
         // Compute mode.
         cos_next = cos + (direction_negative ? sin_shr : -sin_shr);
@@ -112,15 +116,18 @@ always @* begin
     
     else begin
         // Idle mode.
-        if (start) begin
+        out_valid_next = 0;
+        if ((start) & (previous_start != start)) begin
             cos_next = `K;         // Set up initial value for cos.
             sin_next = 0;          // Set up initial value for sin.
             angle_next = angle_in; // Latch input angle into the angle register.
             count_next = 0;        // Set up counter.
             state_next = 1;        // Go to compute mode.
-            out_valid_next = 0;
         end
     end
+    
+    previous_start_nxt = start;
+    
 end
 
 wire [31:0] cos_signbits = {32{cos[31]}};

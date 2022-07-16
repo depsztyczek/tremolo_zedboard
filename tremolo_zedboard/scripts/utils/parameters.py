@@ -1,7 +1,7 @@
 import os
 
 file_path = os.path.dirname(__file__) 
-data_path = os.path.join(file_path, '../../tremolo_zedboard.sim/sim_1/behav/xsim')
+data_path = "."
 freq_cos = 240
 modulation_depth = 0.4
 modulation_frequency = 1

@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 16
+// IP Revision: 21
 
 `timescale 1ns/1ps
 

@@ -8,8 +8,8 @@ module tremolo(
     input  wire input_sin_valid,
     input  wire signed [23:0] left_in,     //fxp 24-23
     input  wire signed [23:0] right_in,    //fxp 24-23
-    input  wire [31:0] sin_in,      //fxp 24-22!
-    input  wire [31:0] cos_in,      //fxp 24-22!
+    input  wire signed [31:0] sin_in,      //fxp 24-22!
+    input  wire signed [31:0] cos_in,      //fxp 24-22!
     output reg signed [23:0] left_out,    //fxp 24-23
     output reg signed [23:0] right_out,   //fxp 24-23
     output reg output_data_valid,
@@ -20,13 +20,13 @@ module tremolo(
 //for constants used dis: https://chummersone.github.io/qformat.html
 //48k sampling frequency
 //smallest step:(360 deg) -> 6.28319 rad/48k = 0.0001308998 -> fxp 32_29 notation
-localparam SMALLEST_STEP = 32'h00011284; //for 1hz frequency, 6.3
-parameter reg [23:0] MODULATION_DEPTH  = 24'h333333; //this is long, but the value in it is like 0.4 for 24 bit two's complement
-parameter  TREMOLO_FREQ = 1; ///in hz
-
+localparam SMALLEST_STEP = 32'h00022508; //for 1hz frequency, 6.3
+parameter  TREMOLO_FREQ = 4; ///in hz
 localparam reg [23:0] MAX_POSITIVE = 24'h7FFFFF;
 localparam ANGLE_STEP = SMALLEST_STEP * TREMOLO_FREQ;
-localparam QUARTER_HEX = 32'h3243eb80; //12k * SMALLEST_STEP
+localparam QUARTER_HEX = 32'h6487ED51; //12k * SMALLEST_STEP
+
+parameter reg signed [23:0] MODULATION_DEPTH  = 24'h333333; //this is long, but the value in it is like 0.4 for 24 bit two's complement
 
 localparam WAIT_FOR_DATA=0, PROCESS_ANGLE=1, MULTIPLY=2;
 reg [1:0] state, state_nxt;
@@ -54,14 +54,20 @@ always @* begin
         previous_left_sample_nxt <= previous_left_sample;
                 
         output_angle_valid_nxt <= output_angle_valid;
-        angle_out_nxt <= angle_out;
         output_data_valid_nxt <= output_data_valid;
+        angle_out_nxt <= angle_out;
+        left_ch_temp_nxt <= left_ch_temp;
+        right_ch_temp_nxt <= right_ch_temp;
+        
+        sin_depth <= sin_depth;
+        sin_mult <= sin_mult;
+        envelope <= envelope;
     
         quarter_nxt <= quarter;
     
         case(state)
             WAIT_FOR_DATA :     begin
-                                    if((previous_left_sample != left_in) | (previous_right_sample != right_in)) begin
+                                    if(input_data_valid) begin
                                         if(angle_out < QUARTER_HEX) begin: cordic_angle_step
                                             angle_out_nxt <= angle_out + ANGLE_STEP;
                                         end: cordic_angle_step
@@ -99,8 +105,7 @@ always @* begin
                                             sin_depth <= (MODULATION_DEPTH * (-cos_in));
                                         end
                                     endcase
-                                    
-                                    sin_mult <= sin_depth[52:29];  // tak. to jest dobra wartoœæ
+                                    sin_mult <= sin_depth[53:30];  // tak. to jest dobra wartoœæ
                                     envelope <= MAX_POSITIVE - MODULATION_DEPTH + sin_mult;
                                     left_ch_temp <= envelope * left_in;
                                     right_ch_temp <= envelope * right_in;

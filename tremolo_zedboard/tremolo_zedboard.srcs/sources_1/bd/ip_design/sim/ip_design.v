@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Wed Jul 13 19:31:52 2022
+//Date        : Sat Jul 16 10:34:12 2022
 //Host        : DESKTOP-8KPGAVB running 64-bit major release  (build 9200)
 //Command     : generate_target ip_design.bd
 //Design      : ip_design
@@ -180,6 +180,7 @@ module ip_design
   wire [31:0]tremolo_1_angle_out;
   wire [23:0]tremolo_1_left_out;
   wire tremolo_1_output_angle_valid;
+  wire tremolo_1_output_data_valid;
   wire [23:0]tremolo_1_right_out;
 
   assign BCLK_0 = i2s_clocking_0_BCLK;
@@ -239,7 +240,7 @@ module ip_design
         .VALID(iis_deserializer_0_VALID));
   ip_design_iis_serializer_0_2 iis_serializer_0
        (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
-        .EN(i2s_clocking_0_EN),
+        .EN(tremolo_1_output_data_valid),
         .LDATA(tremolo_1_left_out),
         .LRCLK(i2s_clocking_0_LRCLK),
         .RDATA(tremolo_1_right_out),
@@ -416,6 +417,7 @@ module ip_design
         .left_in(iis_deserializer_0_LDATA),
         .left_out(tremolo_1_left_out),
         .output_angle_valid(tremolo_1_output_angle_valid),
+        .output_data_valid(tremolo_1_output_data_valid),
         .right_in(iis_deserializer_0_RDATA),
         .right_out(tremolo_1_right_out),
         .rst(rst_ps7_0_100M_peripheral_reset),

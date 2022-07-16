@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:cordic:1.0
-// IP Revision: 2
+// IP Revision: 3
 
 (* X_CORE_INFO = "cordic,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "ip_design_cordic_0_1,cordic,{}" *)
-(* CORE_GENERATION_INFO = "ip_design_cordic_0_1,cordic,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=cordic,x_ipVersion=1.0,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
+(* CORE_GENERATION_INFO = "ip_design_cordic_0_1,cordic,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=cordic,x_ipVersion=1.0,x_ipCoreRevision=3,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
 (* IP_DEFINITION_SOURCE = "package_project" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module ip_design_cordic_0_1 (
