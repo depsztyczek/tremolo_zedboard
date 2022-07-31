@@ -1,142 +1,153 @@
 `timescale 1 ps / 1 ps
 
 module tremolo(
-    input  logic clk,
-    input  logic rst,
-    input  logic en,
-    input  logic input_data_valid,
-    input  logic input_sin_valid,
-    input  logic [23:0] left_in,     //fxp 24-23
-    input  logic [23:0] right_in,    //fxp 24-23
-    input  logic [23:0] sin_in,      //fxp 24-22!
-    output logic [23:0] left_out,    //fxp 24-23
-    output logic [23:0] right_out,   //fxp 24-23
-    output logic output_data_valid,
-    output logic [31:0] angle_out,   //fxp 32-29
-    output logic output_angle_valid
+    input  wire clk,
+    input  wire rst,
+    input  wire en,
+    input  wire input_data_valid,
+    input  wire input_sin_valid,
+    input  wire signed [23:0] left_in,     //fxp sq0.23
+    input  wire signed [23:0] right_in,    //fxp sq0.23
+    input  wire signed [31:0] sin_in,      //fxp sq1.30?
+    input  wire signed [31:0] cos_in,      //fxp sq1.30?
+    output reg signed [23:0] left_out,    //fxp sq0.23
+    output reg signed [23:0] right_out,   //fxp sq0.23
+    output reg output_data_valid,
+    output reg [31:0] angle_out,   //fxp sq1.30
+    output reg output_angle_valid
 );
 
 //for constants used dis: https://chummersone.github.io/qformat.html
 //48k sampling frequency
-//smallest step:(360 deg) -> 6.28319 rad/48k = 0.0001308998 -> fxp 32_29 notation
-localparam SMALLEST_STEP = 32'h00011284; //for 1hz frequency, 6.3
-parameter logic [23:0] MODULATION_DEPTH  = 24'h333333; //this is long, but the value in it is like 0.4 for 24 bit two's complement
-parameter  TREMOLO_FREQ = 1; ///in hz
-
-localparam logic [23:0] MAX_POSITIVE = 24'h7FFFFF;
+//smallest step:(360 deg) -> 6.28319 rad/48k = 0.0001308998 -> fxp sq1.30 notation
+localparam SMALLEST_STEP = 32'h00022508; //for 1hz frequency, 6.3
+parameter  TREMOLO_FREQ = 4; ///in hz
+localparam reg [23:0] MAX_POSITIVE = 24'h7FFFFF;
 localparam ANGLE_STEP = SMALLEST_STEP * TREMOLO_FREQ;
-localparam QUARTER_HEX = 32'h3243eb80; //12k * SMALLEST_STEP
+localparam QUARTER_HEX = 32'h6487ED51; //12k * SMALLEST_STEP
 
-logic [1:0] quarter;
+parameter reg signed [23:0] MODULATION_DEPTH  = 24'h333333; //this is long, but the value in it is like 0.4 for 24 bit two's complement
 
-logic [71:0] left_ch_temp;
-logic [71:0] right_ch_temp;
+localparam WAIT_FOR_DATA = 2'b00, PROCESS_ANGLE = 2'b01, MULTIPLY = 2'b10;
+reg [1:0] state, state_nxt;
+reg output_angle_valid_nxt;
+reg output_data_valid_nxt;
+reg [31:0] angle_out_nxt;
 
-assign left_out = left_ch_temp[68:45];
-assign right_out = right_ch_temp[68:45];
+reg [1:0] quarter;
+reg [1:0] quarter_nxt;
+
+reg signed [47:0]  left_ch_temp;//,  left_ch_temp_nxt;
+reg signed [47:0] right_ch_temp;//, right_ch_temp_nxt;
+
+reg signed [55:0] sin_depth;
+//reg signed [23:0] sin_mult;
+reg signed [23:0] envelope;
+
+
+always @* begin
+    if(en == 1) begin
+        state_nxt = state;
+                        
+        output_angle_valid_nxt = output_angle_valid;
+        output_data_valid_nxt = output_data_valid;
+        angle_out_nxt = angle_out;
+//        left_ch_temp_nxt = left_ch_temp;
+//        right_ch_temp_nxt = right_ch_temp;
+    
+        quarter_nxt = quarter;
+    
+        case(state)
+            WAIT_FOR_DATA :     begin
+                                    if(input_data_valid) begin
+                                    
+                                        if(angle_out < QUARTER_HEX) begin: cordic_angle_step
+                                            angle_out_nxt = angle_out + ANGLE_STEP;
+                                        end: cordic_angle_step
+                                        else begin: next_quarter
+                                            quarter_nxt = quarter + 1;
+                                            angle_out_nxt = 0;
+                                        end: next_quarter
+                                        
+                                        output_angle_valid_nxt = 1;
+                                        output_data_valid_nxt = 0;
+                                        state_nxt = PROCESS_ANGLE;
+                                    end
+                                end
+    
+            PROCESS_ANGLE :     begin
+                                    if(input_sin_valid) begin 
+                                        state_nxt = MULTIPLY;
+                                        output_angle_valid_nxt = 0;
+                                    end
+                                end
+                                
+            MULTIPLY :          begin
+                                    case(quarter)
+                                        0: begin
+                                            sin_depth = (MODULATION_DEPTH * sin_in);
+                                        end
+                                        1: begin
+                                            sin_depth = (MODULATION_DEPTH * cos_in);
+                                        end
+                                        2: begin
+                                            sin_depth = (MODULATION_DEPTH * (-sin_in));
+                                        end
+                                        3: begin
+                                            sin_depth = (MODULATION_DEPTH * (-cos_in));
+                                        end
+                                    endcase
+//                                    sin_mult = sin_depth[53:30];
+                                    envelope = MAX_POSITIVE - MODULATION_DEPTH + sin_depth[53:30];
+                                    left_ch_temp = envelope * left_in;
+                                    right_ch_temp = envelope * right_in;
+                                    state_nxt = WAIT_FOR_DATA;
+                                    output_data_valid_nxt = 1;
+                                end
+        endcase
+    end
+    
+    else if(en == 0) begin
+        angle_out_nxt = 0;
+        left_ch_temp[46:23] = left_in;
+        right_ch_temp[46:23] = right_in;
+        output_data_valid_nxt = 1;
+        output_angle_valid_nxt = 0;
+    end
+end
+
 
 always @(posedge clk) begin: data_process
     if(rst == 1'b1) begin
-        quarter <= '0;
-        angle_out <= '0;
-        output_data_valid <= '0;
-        output_angle_valid <= '0;
-        left_ch_temp <= '0;
-        right_ch_temp <= '0;
+        state <= WAIT_FOR_DATA;
+        
+        left_out <= 0;
+        right_out <= 0;
+        
+        output_angle_valid <= 0;
+        angle_out <= 0;
+        output_data_valid <= 0;
+        
+        quarter <= 0;
     end
-    else if(en == '1) begin
-        angle_out <= angle_out;
-        output_data_valid <= '0;
-        left_ch_temp <= left_ch_temp;
-        right_ch_temp <= right_ch_temp;
-        output_angle_valid <= '0;
-
-        if(input_data_valid == '1) begin: new_data
-            left_ch_temp   <= {24'b0, left_in };
-            right_ch_temp  <= {24'b0, right_in};
-            output_angle_valid <= '1;
-
-            if(angle_out < QUARTER_HEX) begin: cordic_angle_step
-                angle_out <= angle_out + ANGLE_STEP;
-            end: cordic_angle_step
-            else begin: next_quarter
-                quarter <= quarter + 1;
-                angle_out <= '0;
-            end: next_quarter
-        end: new_data
-
-        if((input_sin_valid == '1) && (output_angle_valid == '1)) begin: calc_data
-            case(quarter)
-                0: begin
-                    left_ch_temp  <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * left_ch_temp ); //
-                    right_ch_temp <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * right_ch_temp );
-                end
-                1: begin
-                    left_ch_temp  <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * left_ch_temp );
-                    right_ch_temp <=  ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*sin_in) * right_ch_temp );
-                end
-                2: begin
-                    left_ch_temp  <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in))  * left_ch_temp );
-                    right_ch_temp <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in))  * right_ch_temp );
-                end
-                3: begin
-                    left_ch_temp  <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in) ) * left_ch_temp );
-                    right_ch_temp <= ((MAX_POSITIVE - MODULATION_DEPTH + MODULATION_DEPTH*(-sin_in) ) * right_ch_temp );
-                end
-            endcase
-            //         48                24            48(47:24: same zera, 23:0 dane)
-            //                            temp = 3INT-45FRACT
-            // czy verilog przed przypisaniem sobie tego nie obetnie do 24b
-            // z racji że inputy do mnożenia są 24b i 48b? raczej nie
-            //podobno można bez tempa, do sprawdzenia!!
-            output_data_valid <= '1;
-            output_angle_valid <= '0;
-        end: calc_data
-    end
-
-    else if(en == '0) begin
-        angle_out <= '0;
-        left_ch_temp[68:45] <= left_in;
-        right_ch_temp[68:45] <= right_in;
-        output_data_valid <= '1;
-        output_angle_valid <= '0;
-    end
-end: data_process
-
-// pipeline version, ignore
-// parameter  PIPE_LATENCY = 15;
-// logic [5:0] latency_counter;
-// logic change_quarter_flag = 0;
-// always_ff @(posedge clk) begin: cordic_input_process
-//     if(rst == '1) begin
-//         quarter <= '0;
-//         latency_counter <= '0;
-//         angle_out <= '0;
-//         change_quarter_flag <= '0;
-//     end
-//     else begin
-//         if(angle_out < QUARTER_HEX) begin
-//             angle_out <= angle_out + ANGLE_STEP;
-//         end
-//         else begin  
-//             angle_out <= '0;
-//             change_quarter_flag <= '1;
-//         end
-
-//         if((latency_counter < PIPE_LATENCY) && (change_quarter_flag == '1))
-//         begin
-//             latency_counter <= latency_counter + 1;
-//         end
-//         else
-//         begin
-//             latency_counter <= 0;
-//             quarter <= quarter + 1;
-//             change_quarter_flag <= '0;
-//         end
-
-//     end
     
-// end: cordic_input_process
-// in_left = (s32)(((s64)envelope[index]*(s64)in_left_signed) >> 31);
+    else begin
+        state <= state_nxt;
+        
+//         left_ch_temp <=  left_ch_temp_nxt;
+//        right_ch_temp <= right_ch_temp_nxt;
+        
+        left_out <= left_ch_temp[46:23];
+        right_out <= right_ch_temp[46:23];
+        
+        output_angle_valid <= output_angle_valid_nxt;
+        angle_out <= angle_out_nxt;
+        output_data_valid <= output_data_valid_nxt;
+        
+        quarter <= quarter_nxt;
+    end
+
+
+end: data_process
 
 endmodule

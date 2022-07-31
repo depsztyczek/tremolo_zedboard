@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 9
+// IP Revision: 24
 
 (* X_CORE_INFO = "tremolo,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "tremolo_0,tremolo,{}" *)
-(* CORE_GENERATION_INFO = "tremolo_0,tremolo,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=tremolo,x_ipVersion=1.0,x_ipCoreRevision=9,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,TREMOLO_FREQ=1,MODULATION_DEPTH=333333}" *)
+(* CORE_GENERATION_INFO = "tremolo_0,tremolo,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=tremolo,x_ipVersion=1.0,x_ipCoreRevision=24,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,MODULATION_DEPTH=0x333333,TREMOLO_FREQ=4}" *)
 (* IP_DEFINITION_SOURCE = "package_project" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module tremolo_0 (
@@ -64,11 +64,12 @@ module tremolo_0 (
   left_in,
   right_in,
   sin_in,
+  cos_in,
   left_out,
   right_out,
   output_data_valid,
-  output_angle_valid,
-  angle_out
+  angle_out,
+  output_angle_valid
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, ASSOCIATED_RESET rst, FREQ_HZ 100000000, PHASE 0.000, INSERT_VIP 0" *)
@@ -82,16 +83,17 @@ input wire input_data_valid;
 input wire input_sin_valid;
 input wire [23 : 0] left_in;
 input wire [23 : 0] right_in;
-input wire [23 : 0] sin_in;
+input wire [31 : 0] sin_in;
+input wire [31 : 0] cos_in;
 output wire [23 : 0] left_out;
 output wire [23 : 0] right_out;
 output wire output_data_valid;
-output wire output_angle_valid;
 output wire [31 : 0] angle_out;
+output wire output_angle_valid;
 
   tremolo #(
-    .TREMOLO_FREQ(1),
-    .MODULATION_DEPTH(333333)
+    .MODULATION_DEPTH('H333333),
+    .TREMOLO_FREQ(4)
   ) inst (
     .clk(clk),
     .rst(rst),
@@ -101,10 +103,11 @@ output wire [31 : 0] angle_out;
     .left_in(left_in),
     .right_in(right_in),
     .sin_in(sin_in),
+    .cos_in(cos_in),
     .left_out(left_out),
     .right_out(right_out),
     .output_data_valid(output_data_valid),
-    .output_angle_valid(output_angle_valid),
-    .angle_out(angle_out)
+    .angle_out(angle_out),
+    .output_angle_valid(output_angle_valid)
   );
 endmodule

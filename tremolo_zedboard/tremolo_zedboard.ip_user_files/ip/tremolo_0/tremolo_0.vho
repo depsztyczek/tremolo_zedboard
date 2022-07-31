@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:user:tremolo:1.0
--- IP Revision: 9
+-- IP Revision: 24
 
 -- The following code must appear in the VHDL architecture header.
 
@@ -61,12 +61,13 @@ COMPONENT tremolo_0
     input_sin_valid : IN STD_LOGIC;
     left_in : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
     right_in : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
-    sin_in : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
+    sin_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    cos_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     left_out : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
     right_out : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
     output_data_valid : OUT STD_LOGIC;
-    output_angle_valid : OUT STD_LOGIC;
-    angle_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    angle_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    output_angle_valid : OUT STD_LOGIC
   );
 END COMPONENT;
 -- COMP_TAG_END ------ End COMPONENT Declaration ------------
@@ -85,11 +86,12 @@ your_instance_name : tremolo_0
     left_in => left_in,
     right_in => right_in,
     sin_in => sin_in,
+    cos_in => cos_in,
     left_out => left_out,
     right_out => right_out,
     output_data_valid => output_data_valid,
-    output_angle_valid => output_angle_valid,
-    angle_out => angle_out
+    angle_out => angle_out,
+    output_angle_valid => output_angle_valid
   );
 -- INST_TAG_END ------ End INSTANTIATION Template ---------
 
