@@ -46,6 +46,7 @@ if __name__ == '__main__':
         sin_in = np.concatenate((sin_in, sin_quarter))
         cos_in = np.concatenate((cos_in, cos_quarter))
 
+
     left_right_in = np.cos(2 * np.pi * time * freq_cos)
     tremolo_data = tremolo(left_right_in, modulation_frequency, sampling_rate, modulation_depth)
 

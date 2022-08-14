@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:user:tremolo:1.0
--- IP Revision: 24
+-- IP Revision: 27
 
 -- The following code must appear in the VHDL architecture header.
 
@@ -65,6 +65,9 @@ COMPONENT tremolo_0
     cos_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     left_out : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
     right_out : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    envelope : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    sin_mult : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    sin_depth : OUT STD_LOGIC_VECTOR(55 DOWNTO 0);
     output_data_valid : OUT STD_LOGIC;
     angle_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     output_angle_valid : OUT STD_LOGIC
@@ -89,6 +92,9 @@ your_instance_name : tremolo_0
     cos_in => cos_in,
     left_out => left_out,
     right_out => right_out,
+    envelope => envelope,
+    sin_mult => sin_mult,
+    sin_depth => sin_depth,
     output_data_valid => output_data_valid,
     angle_out => angle_out,
     output_angle_valid => output_angle_valid

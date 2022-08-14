@@ -47,7 +47,7 @@
 // DO NOT MODIFY THIS FILE.
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 24
+// IP Revision: 27
 
 // The following must be inserted into your Verilog file for this
 // core to be instantiated. Change the instance name and port connections
@@ -66,6 +66,9 @@ tremolo_0 your_instance_name (
   .cos_in(cos_in),                          // input wire [31 : 0] cos_in
   .left_out(left_out),                      // output wire [23 : 0] left_out
   .right_out(right_out),                    // output wire [23 : 0] right_out
+  .envelope(envelope),                      // output wire [23 : 0] envelope
+  .sin_mult(sin_mult),                      // output wire [23 : 0] sin_mult
+  .sin_depth(sin_depth),                    // output wire [55 : 0] sin_depth
   .output_data_valid(output_data_valid),    // output wire output_data_valid
   .angle_out(angle_out),                    // output wire [31 : 0] angle_out
   .output_angle_valid(output_angle_valid)  // output wire output_angle_valid

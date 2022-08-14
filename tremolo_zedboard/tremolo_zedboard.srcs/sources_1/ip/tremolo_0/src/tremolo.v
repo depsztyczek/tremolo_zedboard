@@ -12,6 +12,11 @@ module tremolo(
     input  wire signed [31:0] cos_in,      //fxp sq1.30?
     output reg signed [23:0] left_out,    //fxp sq0.23
     output reg signed [23:0] right_out,   //fxp sq0.23
+    
+    output reg signed [23:0] envelope,
+    output reg signed [23:0] sin_mult,
+    output reg signed [55:0] sin_depth,
+    
     output reg output_data_valid,
     output reg [31:0] angle_out,   //fxp sq1.30
     output reg output_angle_valid
@@ -40,9 +45,8 @@ reg [1:0] quarter_nxt;
 reg signed [47:0]  left_ch_temp;//,  left_ch_temp_nxt;
 reg signed [47:0] right_ch_temp;//, right_ch_temp_nxt;
 
-reg signed [55:0] sin_depth;
-//reg signed [23:0] sin_mult;
-reg signed [23:0] envelope;
+//reg signed [55:0] sin_depth;
+//reg signed [23:0] envelope;
 
 
 always @* begin
@@ -97,7 +101,7 @@ always @* begin
                                             sin_depth = (MODULATION_DEPTH * (-cos_in));
                                         end
                                     endcase
-//                                    sin_mult = sin_depth[53:30];
+                                    sin_mult = sin_depth[53:30];
                                     envelope = MAX_POSITIVE - MODULATION_DEPTH + sin_depth[53:30];
                                     left_ch_temp = envelope * left_in;
                                     right_ch_temp = envelope * right_in;
