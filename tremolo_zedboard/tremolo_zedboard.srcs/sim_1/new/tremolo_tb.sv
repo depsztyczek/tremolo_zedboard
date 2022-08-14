@@ -11,7 +11,7 @@ module tremolo_tb(
     reg cordic_angle_valid;
     
     reg audio_data_valid_in, audio_data_valid_out;
-    wire [23:0] audio_data;
+    reg signed [23:0] audio_data;
     wire [23:0] audio_data_left_in;
     wire [23:0] audio_data_right_in;
     wire [23:0] audio_data_left_out;
@@ -47,7 +47,7 @@ module tremolo_tb(
             #30
             @(negedge clk100M);
             audio_data_valid_in = 1;
-            $fscanf(audio_file, "%h", audio_data);
+            audio_data <= 24'h0;
             @(negedge clk100M);
             audio_data_valid_in = 0;
             fork
