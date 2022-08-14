@@ -73,7 +73,6 @@ module tremolo_tb_cordic(
             fork
             
                 while (!$feof(audio_file)) begin: read_audio_file //read until an "end of file" is reached.
-                    #30
                     @(posedge audio_data_valid_out);    
                     @(negedge clk100M);
                     audio_data_valid_in = 1;

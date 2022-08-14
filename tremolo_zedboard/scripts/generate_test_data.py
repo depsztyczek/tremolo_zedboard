@@ -1,4 +1,5 @@
 # *********************************** imports *************************************************************************
+from ctypes import sizeof
 import numpy as np
 import os
 from utils.parameters import freq_cos, data_path, sampling_rate, max_value, modulation_frequency, modulation_depth
@@ -35,19 +36,33 @@ def tremolo(data, modulation_frequency: float, sampling_rate: int, depth: float)
 if __name__ == '__main__':
     time = np.arange(0, 1, 1 / sampling_rate)
 
-    sin_in = np.sin(2 * np.pi * time * modulation_frequency)
-    cos_in = np.cos(2 * np.pi * time * modulation_frequency)
-    left_right_in = np.cos(2 * np.pi * time * freq_cos)
+    angle_in = np.linspace(0, np.pi/2, int(sampling_rate / (4 * modulation_frequency)))
+    sin_in = np.empty(0)
+    cos_in = np.empty(0)
 
+    sin_quarter = np.sin(angle_in)
+    cos_quarter = np.cos(angle_in)
+    for i in range (modulation_frequency * 4):
+        sin_in = np.concatenate((sin_in, sin_quarter))
+        cos_in = np.concatenate((cos_in, cos_quarter))
+
+    left_right_in = np.cos(2 * np.pi * time * freq_cos)
     tremolo_data = tremolo(left_right_in, modulation_frequency, sampling_rate, modulation_depth)
 
-   #  plt.plot(time, sin_in)
-   #  plt.plot(time, cos_in)
-   #  plt.figure()
-   #  plt.plot(time, left_right_in)
-   #  plt.figure()
-   #  plt.plot(time, tremolo_data)
-   #  plt.show()
+    sin_in2 = np.sin(2 * np.pi * time * modulation_frequency)
+    cos_in2 = np.cos(2 * np.pi * time * modulation_frequency)
+
+    plt.figure()
+    plt.plot(time, sin_in)
+    plt.plot(time, cos_in)
+    plt.figure()
+    plt.plot(time, sin_in2)
+    plt.plot(time, cos_in2)
+    # plt.figure()
+    # plt.plot(time, left_right_in)
+    # plt.figure()
+    # plt.plot(time, tremolo_data)
+    plt.show()
 
     convert_data_to_sq2_string_file(sin_in, 'sin_in.data', fract_bits=30, total_bits=32) # sin sq1.30
     convert_data_to_sq2_string_file(cos_in, 'cos_in.data', fract_bits=30, total_bits=32) # cos sq1.30

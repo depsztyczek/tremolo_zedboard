@@ -44,10 +44,16 @@ module tremolo_tb(
         #20
         
         if(sin_in_file & cos_in_file & audio_file & file_out) begin   
+            #30
+            @(negedge clk100M);
+            audio_data_valid_in = 1;
+            $fscanf(audio_file, "%h", audio_data);
+            @(negedge clk100M);
+            audio_data_valid_in = 0;
             fork
             
                 while (!$feof(audio_file)) begin: read_audio_file //read until an "end of file" is reached.
-                    #30
+                    @(posedge audio_data_valid_out);    
                     @(negedge clk100M);
                     audio_data_valid_in = 1;
                     $fscanf(audio_file, "%h", audio_data);
