@@ -11,15 +11,14 @@ To run tremolo effect example in Python:
 2. Paste song in .wav format 
 3. Rename it as test_song.wav
 4. From terminal run pip install -r requirements.txt to install additional modules
-5. Run main.py script
-It'll generate test_song_tremolo.wav file.
+5. Run main.py script - test_song_tremolo.wav file will be generated
 6. Play generated test_song_tremolo.wav
 
 ## Testbench
 To generate test data used in Vivado simulations:
 1. Navigate to tremolo_zedboard/scripts directory
-2. Run generate_test_data.py script - it will create test samples for both left and right audio channels and sin function samples.
-3. Run behavioral simulation using testbench with or without cordic.
+2. Run generate_test_data.py script - it will create test samples for both left and right audio channels and sin function samples
+3. Run behavioral simulation using testbench with or without cordic
 4. Use tremolo_zedboard/scripts/validate_test_output.py script to compare the test result with the python version (expected result)
 
 ## Configuring Vivado/SDK Project:
@@ -32,6 +31,7 @@ To generate test data used in Vivado simulations:
 5. Generate bitstream
 6. File >> Export Hardware... >> Check "Include bitstream"
 7. File >> Launch SDK
+
 In SDK:
 1. File >> New > Application Project >> Templates/Empty Application 
 2. Choose name audio
