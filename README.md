@@ -18,18 +18,21 @@ It'll generate test_song_tremolo.wav file.
 ## Testbench
 To generate test data used in Vivado simulations:
 1. Navigate to tremolo_zedboard/scripts directory
-2. Run generate_test_data.py script
-It'll create test samples for both left and right audio channels and sin function samples.
+2. Run generate_test_data.py script - it will create test samples for both left and right audio channels and sin function samples.
+3. Run behavioral simulation using testbench with or without cordic.
+4. Use tremolo_zedboard/scripts/validate_test_output.py script to compare the test result with the python version (expected result)
 
-## Project progress for 27.06
+## Project progress for 21.08
 
 1. Simulated the expected behaviour in python
 2. Implemented I2S codec drivers on FPGA - audio samples were accessed through AXI, and modulation of audio was done in the microcontroller in C code. At this stage, the planned function was working correctly - we went back to implement the module in FPGA to comply with the curriculum behind SDUP.
 3. Testbench is implemented - we can see plots of ideal modulated cosine wave, versus the actual one that we get from the test.
 4. I2S audio loopback works correctly on hardware, without the use of microcontroller.
-5. Module tremolo.v is implemented - it takes the samples from I2S deserializer, modulates them, and sends them back to the serializer. It uses the cordic algorithm for sine wave generation. It is synthezible.
-6. The tremolo modulation works in hardware, but contains some artifacts - the signal is saturated, and some samples are lost due to timing issues - some debugging is still needed.
+5. IP core tremolo is implemented - it takes the samples from I2S deserializer, modulates them, and sends them back to the serializer. It uses the cordic algorithm for sine wave generation.
+6. The tremolo modulation works in hardware, but to change the parameters you need to recompile FPGA.
 
-❗ The current development branch is called tremolo_hw. ❗
+Current goal - implement configuration of tremolo parameters via AXI-lite.
+
+❗ The current development branch is called AXI_tremolo_parameters. ❗
 
 To see a demo of our solution, download https://we.tl/t-ktl1BE7T6J file.
