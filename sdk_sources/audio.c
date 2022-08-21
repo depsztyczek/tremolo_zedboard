@@ -128,60 +128,25 @@ void AudioWriteToReg(unsigned char u8RegAddr, unsigned char u8Data) {
  * ---------------------------------------------------------------------------- */
 void AudioConfigureJacks()
 {
-	AudioWriteToReg(R4_RECORD_MIXER_LEFT_CONTROL_0, 0x01); //enable mixer 1
-	AudioWriteToReg(R5_RECORD_MIXER_LEFT_CONTROL_1, 0x07); //unmute Left channel of line in into mxr 1 and set gain to 6 db
+	AudioWriteToReg(R4_RECORD_MIXER_LEFT_CONTROL_0, 0x01);  //enable mixer 1
+	AudioWriteToReg(R5_RECORD_MIXER_LEFT_CONTROL_1, 0x05);  //unmute Left channel of line in into mxr 1 and set gain to 0 db
 	AudioWriteToReg(R6_RECORD_MIXER_RIGHT_CONTROL_0, 0x01); //enable mixer 2
-	AudioWriteToReg(R7_RECORD_MIXER_RIGHT_CONTROL_1, 0x07); //unmute Right channel of line in into mxr 2 and set gain to 6 db
+	AudioWriteToReg(R7_RECORD_MIXER_RIGHT_CONTROL_1, 0x05); //unmute Right channel of line in into mxr 2 and set gain to 0 db
 	AudioWriteToReg(R19_ADC_CONTROL, 0x13); //enable ADCs
 
-	AudioWriteToReg(R22_PLAYBACK_MIXER_LEFT_CONTROL_0, 0x21); //unmute Left DAC into Mxr 3; enable mxr 3
+	AudioWriteToReg(R22_PLAYBACK_MIXER_LEFT_CONTROL_0, 0x21);  //unmute Left DAC into Mxr3; enable mxr 3
 	AudioWriteToReg(R24_PLAYBACK_MIXER_RIGHT_CONTROL_0, 0x41); //unmute Right DAC into Mxr4; enable mxr 4
-	AudioWriteToReg(R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL, 0x05); //unmute Mxr3 into Mxr5 and set gain to 6db; enable mxr 5
-	AudioWriteToReg(R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL, 0x11); //unmute Mxr4 into Mxr6 and set gain to 6db; enable mxr 6
-	AudioWriteToReg(R29_PLAYBACK_HEADPHONE_LEFT_VOLUME_CONTROL, 0xFF);//Mute Left channel of HP port (LHP)
-	AudioWriteToReg(R30_PLAYBACK_HEADPHONE_RIGHT_VOLUME_CONTROL, 0xFF); //Mute Right channel of HP port (LHP)
-	//AudioWriteToReg(R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL, 0xE6); //set LOUT volume (0db); unmute left channel of Line out port; set Line out port to line out mode
-	//AudioWriteToReg(R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL, 0xE6); // set ROUT volume (0db); unmute right channel of Line out port; set Line out port to line out mode
-	AudioWriteToReg(R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL, 0xFE); //set LOUT volume (0db); unmute left channel of Line out port; set Line out port to line out mode
-	AudioWriteToReg(R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL, 0xFE); // set ROUT volume (0db); unmute right channel of Line out port; set Line out port to line out mode
-	AudioWriteToReg(R35_PLAYBACK_POWER_MANAGEMENT, 0x03); //enable left and right channel playback (not sure exactly what this does...)
+	AudioWriteToReg(R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL, 0x03);  //unmute Mxr3 into Mxr5 and set gain to 0dB; enable mxr 5
+	AudioWriteToReg(R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL, 0x09); //unmute Mxr4 into Mxr6 and set gain to 0dB; enable mxr 6
+
+	AudioWriteToReg(R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL, 0xFE);  //set LOUT volume (+6db); unmute left channel of Line out port; set Line out port to line out mode
+	AudioWriteToReg(R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL, 0xFE); //set ROUT volume (+6db); unmute right channel of Line out port; set Line out port to line out mode
+	AudioWriteToReg(R35_PLAYBACK_POWER_MANAGEMENT, 0x03);                 //enable left and right channel playback (not sure exactly what this does...)
 	AudioWriteToReg(R36_DAC_CONTROL_0, 0x03); //enable both DACs
 
-	AudioWriteToReg(R58_SERIAL_INPUT_ROUTE_CONTROL, 0x01); //Connect I2S serial port output (SDATA_O) to DACs
+	AudioWriteToReg(R58_SERIAL_INPUT_ROUTE_CONTROL, 0x01);  //Connect I2S serial port output (SDATA_O) to DACs
 	AudioWriteToReg(R59_SERIAL_OUTPUT_ROUTE_CONTROL, 0x01); //connect I2S serial port input (SDATA_I) to ADCs
 
 	AudioWriteToReg(R65_CLOCK_ENABLE_0, 0x7F); //Enable clocks
 	AudioWriteToReg(R66_CLOCK_ENABLE_1, 0x03); //Enable rest of clocks
-}
-
-/* ---------------------------------------------------------------------------- *
- * 								LineinLineoutConfig()							*
- * ---------------------------------------------------------------------------- *
- * Configures Line-In input, ADC's, DAC's, Line-Out and HP-Out.
- * ---------------------------------------------------------------------------- */
-void LineinLineoutConfig() {
-
-	AudioWriteToReg(R17_CONVERTER_CONTROL_0, 0x05);//48 KHz
-	AudioWriteToReg(R64_SERIAL_PORT_SAMPLING_RATE, 0x05);//48 KHz
-	AudioWriteToReg(R19_ADC_CONTROL, 0x13);
-	AudioWriteToReg(R36_DAC_CONTROL_0, 0x03);
-	AudioWriteToReg(R35_PLAYBACK_POWER_MANAGEMENT, 0x03);
-	AudioWriteToReg(R58_SERIAL_INPUT_ROUTE_CONTROL, 0x01);
-	AudioWriteToReg(R59_SERIAL_OUTPUT_ROUTE_CONTROL, 0x01);
-	AudioWriteToReg(R65_CLOCK_ENABLE_0, 0x7F);
-	AudioWriteToReg(R66_CLOCK_ENABLE_1, 0x03);
-
-	AudioWriteToReg(R4_RECORD_MIXER_LEFT_CONTROL_0, 0x01);
-	AudioWriteToReg(R5_RECORD_MIXER_LEFT_CONTROL_1, 0x05);//0 dB gain
-	AudioWriteToReg(R6_RECORD_MIXER_RIGHT_CONTROL_0, 0x01);
-	AudioWriteToReg(R7_RECORD_MIXER_RIGHT_CONTROL_1, 0x05);//0 dB gain
-
-	AudioWriteToReg(R22_PLAYBACK_MIXER_LEFT_CONTROL_0, 0x21);
-	AudioWriteToReg(R24_PLAYBACK_MIXER_RIGHT_CONTROL_0, 0x41);
-	AudioWriteToReg(R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL, 0x03);//0 dB
-	AudioWriteToReg(R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL, 0x09);//0 dB
-	AudioWriteToReg(R29_PLAYBACK_HEADPHONE_LEFT_VOLUME_CONTROL, 0xE7);//0 dB
-	AudioWriteToReg(R30_PLAYBACK_HEADPHONE_RIGHT_VOLUME_CONTROL, 0xE7);//0 dB
-	AudioWriteToReg(R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL, 0xE6);//0 dB
-	AudioWriteToReg(R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL, 0xE6);//0 dB
 }

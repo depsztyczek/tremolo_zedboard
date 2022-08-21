@@ -11,8 +11,6 @@ int main(void)
 	AudioPllConfig();
 
 	//Configure the Line in and Line out ports.
-	//Call LineInLineOutConfig() for a configuration that
-	//enables the HP jack too.
 	AudioConfigureJacks();
 
 	xil_printf("ADAU1761 configured\n\r");

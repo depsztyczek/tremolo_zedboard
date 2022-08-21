@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Jun 10 15:48:35 2022" VIVADOVERSION="2019.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Jul 31 22:16:28 2022" VIVADOVERSION="2019.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zed:part0:1.4" DEVICE="7z020" NAME="ip_design" PACKAGE="clg484" SPEEDGRADE="-1"/>
 
@@ -27,6 +27,41 @@
     <PORT CLKFREQUENCY="10000000" DIR="O" NAME="FCLK_CLK1_0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">
       <CONNECTIONS>
         <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK1"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="IIC_1_0_sda_i" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_I">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_I"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="IIC_1_0_sda_o" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_O">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_O"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="IIC_1_0_sda_t" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_T">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_T"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="IIC_1_0_scl_i" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_I">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_I"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="IIC_1_0_scl_o" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_O">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_O"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="IIC_1_0_scl_t" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_T">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_T"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="1" NAME="GPIO_0_tri_i" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_gpio_io_i">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio_io_i"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" NAME="DDR_cas_n" SIGIS="undef" SIGNAME="processing_system7_0_DDR_CAS_n">
@@ -132,41 +167,6 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="processing_system7_0_PS_PORB">
       <CONNECTIONS>
         <CONNECTION INSTANCE="processing_system7_0" PORT="PS_PORB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="1" NAME="GPIO_0_tri_i" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_gpio_io_i">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio_io_i"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="IIC_1_0_sda_i" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_I">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_I"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="IIC_1_0_sda_o" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_O">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_O"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="IIC_1_0_sda_t" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SDA_T">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SDA_T"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="IIC_1_0_scl_i" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_I">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_I"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="IIC_1_0_scl_o" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_O">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_O"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="IIC_1_0_scl_t" SIGIS="undef" SIGNAME="processing_system7_0_I2C1_SCL_T">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="I2C1_SCL_T"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -590,6 +590,51 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
+    <MODULE COREREVISION="3" FULLNAME="/cordic_0" HWVERSION="1.0" INSTANCE="cordic_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="cordic" VLNV="xilinx.com:user:cordic:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="ip_design_cordic_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clock" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="reset" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_reset">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_reset"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="start" SIGIS="undef" SIGNAME="tremolo_1_output_angle_valid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="output_angle_valid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="angle_in" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_angle_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="angle_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="cos_out" RIGHT="0" SIGIS="undef" SIGNAME="cordic_0_cos_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="cos_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="sin_out" RIGHT="0" SIGIS="undef" SIGNAME="cordic_0_sin_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="sin_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="valid_out" SIGIS="undef" SIGNAME="cordic_0_valid_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="input_sin_valid"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
     <MODULE COREREVISION="2" FULLNAME="/i2s_clocking_0" HWVERSION="1.0" INSTANCE="i2s_clocking_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="i2s_clocking" VLNV="xilinx.com:user:i2s_clocking:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -619,7 +664,7 @@
         <PORT DIR="O" NAME="EN" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
           <CONNECTIONS>
             <CONNECTION INSTANCE="iis_deserializer_0" PORT="EN"/>
-            <CONNECTION INSTANCE="iis_serializer_0" PORT="EN"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="en"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -659,15 +704,19 @@
         </PORT>
         <PORT DIR="O" LEFT="23" NAME="LDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_LDATA">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="iis_serializer_0" PORT="LDATA"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="left_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="23" NAME="RDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_RDATA">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="iis_serializer_0" PORT="RDATA"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="right_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="VALID" SIGIS="undef"/>
+        <PORT DIR="O" NAME="VALID" SIGIS="undef" SIGNAME="iis_deserializer_0_VALID">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="tremolo_1" PORT="input_data_valid"/>
+          </CONNECTIONS>
+        </PORT>
       </PORTS>
       <BUSINTERFACES/>
     </MODULE>
@@ -698,19 +747,19 @@
             <CONNECTION INSTANCE="External_Ports" PORT="SDATA_O_0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="tremolo_1_output_data_valid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="i2s_clocking_0" PORT="EN"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="output_data_valid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="23" NAME="LDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_LDATA">
+        <PORT DIR="I" LEFT="23" NAME="LDATA" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_left_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="iis_deserializer_0" PORT="LDATA"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="left_out"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="23" NAME="RDATA" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_RDATA">
+        <PORT DIR="I" LEFT="23" NAME="RDATA" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_right_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="iis_deserializer_0" PORT="RDATA"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="right_out"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1902,6 +1951,8 @@
             <CONNECTION INSTANCE="i2s_clocking_0" PORT="CLK_100M"/>
             <CONNECTION INSTANCE="iis_deserializer_0" PORT="CLK_100MHZ"/>
             <CONNECTION INSTANCE="iis_serializer_0" PORT="CLK_100MHZ"/>
+            <CONNECTION INSTANCE="cordic_0" PORT="clock"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="10000000" DIR="O" NAME="FCLK_CLK1" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">
@@ -3001,7 +3052,12 @@
         <PORT DIR="I" NAME="dcm_locked" SIGIS="undef"/>
         <PORT DIR="O" NAME="mb_reset" SIGIS="rst"/>
         <PORT DIR="O" LEFT="0" NAME="bus_struct_reset" RIGHT="0" SIGIS="rst"/>
-        <PORT DIR="O" LEFT="0" NAME="peripheral_reset" RIGHT="0" SIGIS="rst"/>
+        <PORT DIR="O" LEFT="0" NAME="peripheral_reset" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_reset">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="reset"/>
+            <CONNECTION INSTANCE="tremolo_1" PORT="rst"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" LEFT="0" NAME="interconnect_aresetn" RIGHT="0" SIGIS="rst"/>
         <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
@@ -3011,6 +3067,88 @@
             <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aresetn"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M01_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_ARESETN"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="24" FULLNAME="/tremolo_1" HWVERSION="1.0" INSTANCE="tremolo_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="tremolo" VLNV="xilinx.com:user:tremolo:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="MODULATION_DEPTH" VALUE="0x333333"/>
+        <PARAMETER NAME="TREMOLO_FREQ" VALUE="4"/>
+        <PARAMETER NAME="Component_Name" VALUE="ip_design_tremolo_1_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="rst" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_reset">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_reset"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="en" SIGIS="undef" SIGNAME="i2s_clocking_0_EN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="i2s_clocking_0" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="input_data_valid" SIGIS="undef" SIGNAME="iis_deserializer_0_VALID">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="VALID"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="input_sin_valid" SIGIS="undef" SIGNAME="cordic_0_valid_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="valid_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="23" NAME="left_in" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_LDATA">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="LDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="23" NAME="right_in" RIGHT="0" SIGIS="undef" SIGNAME="iis_deserializer_0_RDATA">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_deserializer_0" PORT="RDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="sin_in" RIGHT="0" SIGIS="undef" SIGNAME="cordic_0_sin_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="sin_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="cos_in" RIGHT="0" SIGIS="undef" SIGNAME="cordic_0_cos_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="cos_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="23" NAME="left_out" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_left_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="LDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="23" NAME="right_out" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_right_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="RDATA"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="output_data_valid" SIGIS="undef" SIGNAME="tremolo_1_output_data_valid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="iis_serializer_0" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="angle_out" RIGHT="0" SIGIS="undef" SIGNAME="tremolo_1_angle_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="angle_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="output_angle_valid" SIGIS="undef" SIGNAME="tremolo_1_output_angle_valid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="cordic_0" PORT="start"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

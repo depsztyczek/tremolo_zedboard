@@ -1,15 +1,15 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Fri Jun 10 15:48:35 2022
-//Host        : DESKTOP-8KPGAVB running 64-bit major release  (build 9200)
+//Date        : Sun Jul 31 22:16:27 2022
+//Host        : DESKTOP-34NJM86 running 64-bit major release  (build 9200)
 //Command     : generate_target ip_design.bd
 //Design      : ip_design
 //Purpose     : IP block netlist
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "ip_design,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ip_design,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=13,numReposBlks=8,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=2,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "ip_design.hwdef" *) 
+(* CORE_GENERATION_INFO = "ip_design,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=ip_design,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=15,numReposBlks=10,numNonXlnxBlks=0,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=5,da_axi4_s2mm_cnt=1,da_board_cnt=2,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "ip_design.hwdef" *) 
 module ip_design
    (BCLK_0,
     DDR_addr,
@@ -80,11 +80,15 @@ module ip_design
 
   wire SDATA_I_0_1;
   wire [1:0]axi_gpio_0_GPIO_TRI_I;
+  wire [31:0]cordic_0_cos_out;
+  wire [31:0]cordic_0_sin_out;
+  wire cordic_0_valid_out;
   wire i2s_clocking_0_BCLK;
   wire i2s_clocking_0_EN;
   wire i2s_clocking_0_LRCLK;
   wire [23:0]iis_deserializer_0_LDATA;
   wire [23:0]iis_deserializer_0_RDATA;
+  wire iis_deserializer_0_VALID;
   wire iis_serializer_0_SDATA;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
@@ -172,6 +176,12 @@ module ip_design
   wire [3:0]ps7_0_axi_periph_M01_AXI_WSTRB;
   wire ps7_0_axi_periph_M01_AXI_WVALID;
   wire [0:0]rst_ps7_0_100M_peripheral_aresetn;
+  wire [0:0]rst_ps7_0_100M_peripheral_reset;
+  wire [31:0]tremolo_1_angle_out;
+  wire [23:0]tremolo_1_left_out;
+  wire tremolo_1_output_angle_valid;
+  wire tremolo_1_output_data_valid;
+  wire [23:0]tremolo_1_right_out;
 
   assign BCLK_0 = i2s_clocking_0_BCLK;
   assign FCLK_CLK1_0 = processing_system7_0_FCLK_CLK1;
@@ -206,6 +216,14 @@ module ip_design
         .s_axi_wready(ps7_0_axi_periph_M01_AXI_WREADY),
         .s_axi_wstrb(ps7_0_axi_periph_M01_AXI_WSTRB),
         .s_axi_wvalid(ps7_0_axi_periph_M01_AXI_WVALID));
+  ip_design_cordic_0_1 cordic_0
+       (.angle_in(tremolo_1_angle_out),
+        .clock(processing_system7_0_FCLK_CLK0),
+        .cos_out(cordic_0_cos_out),
+        .reset(rst_ps7_0_100M_peripheral_reset),
+        .sin_out(cordic_0_sin_out),
+        .start(tremolo_1_output_angle_valid),
+        .valid_out(cordic_0_valid_out));
   ip_design_i2s_clocking_0_0 i2s_clocking_0
        (.BCLK(i2s_clocking_0_BCLK),
         .CLK_100M(processing_system7_0_FCLK_CLK0),
@@ -218,13 +236,14 @@ module ip_design
         .LRCLK(i2s_clocking_0_LRCLK),
         .RDATA(iis_deserializer_0_RDATA),
         .SCLK(i2s_clocking_0_BCLK),
-        .SDATA(SDATA_I_0_1));
+        .SDATA(SDATA_I_0_1),
+        .VALID(iis_deserializer_0_VALID));
   ip_design_iis_serializer_0_2 iis_serializer_0
        (.CLK_100MHZ(processing_system7_0_FCLK_CLK0),
-        .EN(i2s_clocking_0_EN),
-        .LDATA(iis_deserializer_0_LDATA),
+        .EN(tremolo_1_output_data_valid),
+        .LDATA(tremolo_1_left_out),
         .LRCLK(i2s_clocking_0_LRCLK),
-        .RDATA(iis_deserializer_0_RDATA),
+        .RDATA(tremolo_1_right_out),
         .SCLK(i2s_clocking_0_BCLK),
         .SDATA(iis_serializer_0_SDATA));
   ip_design_processing_system7_0_0 processing_system7_0
@@ -386,7 +405,23 @@ module ip_design
         .ext_reset_in(processing_system7_0_FCLK_RESET0_N),
         .mb_debug_sys_rst(1'b0),
         .peripheral_aresetn(rst_ps7_0_100M_peripheral_aresetn),
+        .peripheral_reset(rst_ps7_0_100M_peripheral_reset),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
+  ip_design_tremolo_1_0 tremolo_1
+       (.angle_out(tremolo_1_angle_out),
+        .clk(processing_system7_0_FCLK_CLK0),
+        .cos_in(cordic_0_cos_out),
+        .en(i2s_clocking_0_EN),
+        .input_data_valid(iis_deserializer_0_VALID),
+        .input_sin_valid(cordic_0_valid_out),
+        .left_in(iis_deserializer_0_LDATA),
+        .left_out(tremolo_1_left_out),
+        .output_angle_valid(tremolo_1_output_angle_valid),
+        .output_data_valid(tremolo_1_output_data_valid),
+        .right_in(iis_deserializer_0_RDATA),
+        .right_out(tremolo_1_right_out),
+        .rst(rst_ps7_0_100M_peripheral_reset),
+        .sin_in(cordic_0_sin_out));
 endmodule
 
 module ip_design_ps7_0_axi_periph_0
