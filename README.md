@@ -22,6 +22,23 @@ To generate test data used in Vivado simulations:
 3. Run behavioral simulation using testbench with or without cordic.
 4. Use tremolo_zedboard/scripts/validate_test_output.py script to compare the test result with the python version (expected result)
 
+## Configuring Vivado/SDK Project:
+
+1. Create Vivado project for ZedBoard (avnet)
+2. Add sources >> Add or create design sources >> Add directories >> tremolo_zedboard.srcs/sources_1
+3. Add sources >> Add or create constraints >> constraints_1/constraints_audio.xdc
+4. Add sources >> Add or create simulation sources >> Add directiories >> tremolo_zedboard.srcs/sim_1
+4. Right-click on ip_design.bd block design >> Create HDL Wrapper >> Let Vivado ...
+5. Generate bitstream
+6. File >> Export Hardware... >> Check "Include bitstream"
+7. File >> Launch SDK
+In SDK:
+1. File >> New > Application Project >> Templates/Empty Application 
+2. Choose name audio
+3. Project Explorer >> Expand audio_dsp >> Right-click on src >> Import sdk_sources
+
+Project is ready for development, flashing and debugging.
+
 ## Project progress for 21.08
 
 1. Simulated the expected behaviour in python
