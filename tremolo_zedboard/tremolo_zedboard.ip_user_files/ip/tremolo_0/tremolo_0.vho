@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:user:tremolo:1.0
--- IP Revision: 24
+-- IP Revision: 25
 
 -- The following code must appear in the VHDL architecture header.
 
@@ -57,6 +57,8 @@ COMPONENT tremolo_0
     clk : IN STD_LOGIC;
     rst : IN STD_LOGIC;
     en : IN STD_LOGIC;
+    modulation_depth : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
+    modulation_frequency : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     input_data_valid : IN STD_LOGIC;
     input_sin_valid : IN STD_LOGIC;
     left_in : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
@@ -81,6 +83,8 @@ your_instance_name : tremolo_0
     clk => clk,
     rst => rst,
     en => en,
+    modulation_depth => modulation_depth,
+    modulation_frequency => modulation_frequency,
     input_data_valid => input_data_valid,
     input_sin_valid => input_sin_valid,
     left_in => left_in,

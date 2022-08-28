@@ -74,4 +74,4 @@ void AudioWriteToReg(unsigned char u8RegAddr, unsigned char u8Data);
 void AudioConfigureJacks();
 void LineinLineoutConfig();
 
-#endif
+#endif /* __AUDIO_H_ */

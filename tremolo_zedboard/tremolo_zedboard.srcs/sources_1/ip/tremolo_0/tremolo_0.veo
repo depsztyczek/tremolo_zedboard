@@ -47,7 +47,7 @@
 // DO NOT MODIFY THIS FILE.
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 24
+// IP Revision: 25
 
 // The following must be inserted into your Verilog file for this
 // core to be instantiated. Change the instance name and port connections
@@ -55,20 +55,22 @@
 
 //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
 tremolo_0 your_instance_name (
-  .clk(clk),                                // input wire clk
-  .rst(rst),                                // input wire rst
-  .en(en),                                  // input wire en
-  .input_data_valid(input_data_valid),      // input wire input_data_valid
-  .input_sin_valid(input_sin_valid),        // input wire input_sin_valid
-  .left_in(left_in),                        // input wire [23 : 0] left_in
-  .right_in(right_in),                      // input wire [23 : 0] right_in
-  .sin_in(sin_in),                          // input wire [31 : 0] sin_in
-  .cos_in(cos_in),                          // input wire [31 : 0] cos_in
-  .left_out(left_out),                      // output wire [23 : 0] left_out
-  .right_out(right_out),                    // output wire [23 : 0] right_out
-  .output_data_valid(output_data_valid),    // output wire output_data_valid
-  .angle_out(angle_out),                    // output wire [31 : 0] angle_out
-  .output_angle_valid(output_angle_valid)  // output wire output_angle_valid
+  .clk(clk),                                    // input wire clk
+  .rst(rst),                                    // input wire rst
+  .en(en),                                      // input wire en
+  .modulation_depth(modulation_depth),          // input wire [23 : 0] modulation_depth
+  .modulation_frequency(modulation_frequency),  // input wire [31 : 0] modulation_frequency
+  .input_data_valid(input_data_valid),          // input wire input_data_valid
+  .input_sin_valid(input_sin_valid),            // input wire input_sin_valid
+  .left_in(left_in),                            // input wire [23 : 0] left_in
+  .right_in(right_in),                          // input wire [23 : 0] right_in
+  .sin_in(sin_in),                              // input wire [31 : 0] sin_in
+  .cos_in(cos_in),                              // input wire [31 : 0] cos_in
+  .left_out(left_out),                          // output wire [23 : 0] left_out
+  .right_out(right_out),                        // output wire [23 : 0] right_out
+  .output_data_valid(output_data_valid),        // output wire output_data_valid
+  .angle_out(angle_out),                        // output wire [31 : 0] angle_out
+  .output_angle_valid(output_angle_valid)      // output wire output_angle_valid
 );
 // INST_TAG_END ------ End INSTANTIATION Template ---------
 

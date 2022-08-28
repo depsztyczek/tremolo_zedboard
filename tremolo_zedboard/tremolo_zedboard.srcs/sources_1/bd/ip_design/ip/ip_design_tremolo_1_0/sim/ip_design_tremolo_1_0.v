@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:user:tremolo:1.0
-// IP Revision: 24
+// IP Revision: 25
 
 `timescale 1ns/1ps
 
@@ -58,6 +58,8 @@ module ip_design_tremolo_1_0 (
   clk,
   rst,
   en,
+  modulation_depth,
+  modulation_frequency,
   input_data_valid,
   input_sin_valid,
   left_in,
@@ -78,6 +80,8 @@ input wire clk;
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 rst RST" *)
 input wire rst;
 input wire en;
+input wire [23 : 0] modulation_depth;
+input wire [31 : 0] modulation_frequency;
 input wire input_data_valid;
 input wire input_sin_valid;
 input wire [23 : 0] left_in;
@@ -90,13 +94,12 @@ output wire output_data_valid;
 output wire [31 : 0] angle_out;
 output wire output_angle_valid;
 
-  tremolo #(
-    .MODULATION_DEPTH('H333333),
-    .TREMOLO_FREQ(4)
-  ) inst (
+  tremolo inst (
     .clk(clk),
     .rst(rst),
     .en(en),
+    .modulation_depth(modulation_depth),
+    .modulation_frequency(modulation_frequency),
     .input_data_valid(input_data_valid),
     .input_sin_valid(input_sin_valid),
     .left_in(left_in),
