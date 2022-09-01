@@ -1,6 +1,6 @@
 #include "uart_helper.h"
 
-u32 UART_GetDecDigit(u32 byte) { return (u32) (byte - ZERO_CHAR); };
+u32 UART_GetDecDigit(char8 byte) { return (u32) (byte - ZERO_CHAR); };
 
 /**
  *  UART_ReadThreeDigitDecVal - Read three-digit decimal value from UART
@@ -16,7 +16,14 @@ char8 recChar;
 	do
 	{
 		outbyte (recChar = inbyte());
-		retNumber += (UART_GetDecDigit(recChar) * ((u32) pow(10, digitsCounter)));
+		if(recChar != CARRIAGE_RETURN)
+		{
+			retNumber += (UART_GetDecDigit(recChar) * ((u32) pow(10, digitsCounter)));
+		}
+		else
+		{
+			retNumber = (u32) (retNumber / ((u32) pow(10, digitsCounter+1)));
+		}
 	}
 	while((recChar != CARRIAGE_RETURN) & (digitsCounter-- > 0U));
     return retNumber;
@@ -30,17 +37,14 @@ char8 recChar;
 u32 UART_GetFXP_SQ0_23(void)
 {
 u32 retNumber = 0;
-char8 recChar;
+char8 recChar = 0;
 u16 negFlag = 0;
 u16 digitsCounter = 0;
 
 
     outbyte (recChar = inbyte());
-    xil_printf("\r\n");
     if (recChar == '-') {
-    	//TODO narazie ignoruj XD
     	negFlag = 1;
-    	xil_printf("\r\n");
     }
     else
     {
@@ -51,7 +55,6 @@ u16 digitsCounter = 0;
     {
     	outbyte (recChar = inbyte());
     	retNumber = UART_GetDecDigit(recChar);
-    	xil_printf("Negflag = 1\r\n");
     }
 
     if(retNumber != 0)
@@ -64,9 +67,17 @@ u16 digitsCounter = 0;
     	do
     	{
     		outbyte (recChar = inbyte());
-    		retNumber += ((UART_GetDecDigit(recChar) << 23) / ((u32) pow(10, ++digitsCounter)));
+
+    		if (recChar != CARRIAGE_RETURN)
+			{
+				retNumber += ((UART_GetDecDigit(recChar) << 23) / ((u32) pow(10, ++digitsCounter)));
+			}
     	}
     	while((recChar != CARRIAGE_RETURN) & (digitsCounter <= MAX_DECIMAL_PLACE));
+    	if(negFlag == 1)
+    	{
+    		retNumber = ~retNumber + 1;
+    	}
     }
     xil_printf("\r\n");
     return retNumber;

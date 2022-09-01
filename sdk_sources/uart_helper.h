@@ -20,6 +20,6 @@
 
 u32 UART_ReadThreeDigitDecVal(void);
 u32 UART_GetFXP_SQ0_23(void);
-u32 UART_GetDecDigit(u32 byte);
+u32 UART_GetDecDigit(char8 byte);
 
 #endif

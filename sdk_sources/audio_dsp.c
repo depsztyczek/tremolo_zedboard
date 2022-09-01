@@ -11,7 +11,6 @@ int main(void)
 	u32 depth;
 	u32 frequency;
 
-//	init_platform(); idk if this is necessary XD copied from lab3
 
 	xil_printf("Entering Main\r\n");
 	//Configure the IIC data structure
@@ -41,17 +40,19 @@ int main(void)
 
 		if((depth == 0) | (frequency == 0))
 		{
-			xil_printf("\r\nConfiguration erroneous, try again\r\n.");
+			configureTremolo(DISABLE_TREMOLO, 0, 0);
+			xil_printf("\r\nConfiguration erroneous, try again. Tremolo disabled.\r\n.");
 		}
 		else
 		{
 			configureTremolo(enableTremolo, depth, frequency);
-			xil_printf("\r\nTremolo configured. Depth: %d, Freq: %d\r\n.", depth, frequency);
+			xil_printf("\r\nTremolo configured. Depth: %x, Freq: %d.\r\n", depth, frequency);
 		}
 
 	}
 	else
 	{
+		configureTremolo(DISABLE_TREMOLO, 0, 0);
 		xil_printf("\r\nTremolo disabled, entering loopback mode.\r\n");
 	}
 }
