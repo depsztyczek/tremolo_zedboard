@@ -103,10 +103,14 @@ always @* begin
     
     else if(en == 0) begin
         angle_out_nxt = 0;
-        left_ch_temp[46:23] = left_in;
-        right_ch_temp[46:23] = right_in;
         output_data_valid_nxt = 1;
         output_angle_valid_nxt = 0;
+        quarter_nxt = 0;
+        sin_depth = 0;
+        envelope = 0;
+        state_nxt = WAIT_FOR_DATA;
+        left_ch_temp = {1'b0, left_in, 23'b0};
+        right_ch_temp = {1'b0, right_in, 23'b0};
     end
 end
 

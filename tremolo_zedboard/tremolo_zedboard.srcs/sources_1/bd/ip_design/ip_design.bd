@@ -25,8 +25,8 @@
       "iis_deserializer_0": "",
       "iis_serializer_0": "",
       "cordic_0": "",
-      "tremolo_1": "",
-      "AXI_tremolo_paramete_0": ""
+      "AXI_tremolo_paramete_0": "",
+      "tremolo_1": ""
     },
     "interface_ports": {
       "DDR": {
@@ -1333,30 +1333,6 @@
           }
         },
         "interface_nets": {
-          "m01_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
-            ]
-          },
-          "m02_couplers_to_ps7_0_axi_periph": {
-            "interface_ports": [
-              "M02_AXI",
-              "m02_couplers/M_AXI"
-            ]
-          },
-          "xbar_to_m01_couplers": {
-            "interface_ports": [
-              "xbar/M01_AXI",
-              "m01_couplers/S_AXI"
-            ]
-          },
-          "xbar_to_m02_couplers": {
-            "interface_ports": [
-              "xbar/M02_AXI",
-              "m02_couplers/S_AXI"
-            ]
-          },
           "ps7_0_axi_periph_to_s00_couplers": {
             "interface_ports": [
               "S00_AXI",
@@ -1379,6 +1355,30 @@
             "interface_ports": [
               "xbar/M00_AXI",
               "m00_couplers/S_AXI"
+            ]
+          },
+          "m01_couplers_to_ps7_0_axi_periph": {
+            "interface_ports": [
+              "M01_AXI",
+              "m01_couplers/M_AXI"
+            ]
+          },
+          "m02_couplers_to_ps7_0_axi_periph": {
+            "interface_ports": [
+              "M02_AXI",
+              "m02_couplers/M_AXI"
+            ]
+          },
+          "xbar_to_m01_couplers": {
+            "interface_ports": [
+              "xbar/M01_AXI",
+              "m01_couplers/S_AXI"
+            ]
+          },
+          "xbar_to_m02_couplers": {
+            "interface_ports": [
+              "xbar/M02_AXI",
+              "m02_couplers/S_AXI"
             ]
           }
         },
@@ -1448,13 +1448,13 @@
         "vlnv": "xilinx.com:user:cordic:1.0",
         "xci_name": "ip_design_cordic_0_1"
       },
-      "tremolo_1": {
-        "vlnv": "xilinx.com:user:tremolo:1.0",
-        "xci_name": "ip_design_tremolo_1_0"
-      },
       "AXI_tremolo_paramete_0": {
         "vlnv": "xilinx.com:user:AXI_tremolo_parameters:1.0",
         "xci_name": "ip_design_AXI_tremolo_paramete_0_0"
+      },
+      "tremolo_1": {
+        "vlnv": "xilinx.com:user:tremolo:1.0",
+        "xci_name": "ip_design_tremolo_1_0"
       }
     },
     "interface_nets": {
@@ -1462,30 +1462,6 @@
         "interface_ports": [
           "FIXED_IO",
           "processing_system7_0/FIXED_IO"
-        ]
-      },
-      "processing_system7_0_M_AXI_GP0": {
-        "interface_ports": [
-          "processing_system7_0/M_AXI_GP0",
-          "ps7_0_axi_periph/S00_AXI"
-        ]
-      },
-      "axi_gpio_0_GPIO": {
-        "interface_ports": [
-          "GPIO_0",
-          "axi_gpio_0/GPIO"
-        ]
-      },
-      "ps7_0_axi_periph_M01_AXI": {
-        "interface_ports": [
-          "ps7_0_axi_periph/M01_AXI",
-          "axi_gpio_0/S_AXI"
-        ]
-      },
-      "processing_system7_0_IIC_1": {
-        "interface_ports": [
-          "IIC_1_0",
-          "processing_system7_0/IIC_1"
         ]
       },
       "ps7_0_axi_periph_M00_AXI": {
@@ -1498,6 +1474,30 @@
         "interface_ports": [
           "DDR",
           "processing_system7_0/DDR"
+        ]
+      },
+      "axi_gpio_0_GPIO": {
+        "interface_ports": [
+          "GPIO_0",
+          "axi_gpio_0/GPIO"
+        ]
+      },
+      "processing_system7_0_M_AXI_GP0": {
+        "interface_ports": [
+          "processing_system7_0/M_AXI_GP0",
+          "ps7_0_axi_periph/S00_AXI"
+        ]
+      },
+      "ps7_0_axi_periph_M01_AXI": {
+        "interface_ports": [
+          "ps7_0_axi_periph/M01_AXI",
+          "axi_gpio_0/S_AXI"
+        ]
+      },
+      "processing_system7_0_IIC_1": {
+        "interface_ports": [
+          "IIC_1_0",
+          "processing_system7_0/IIC_1"
         ]
       }
     },
@@ -1517,8 +1517,8 @@
           "iis_deserializer_0/CLK_100MHZ",
           "iis_serializer_0/CLK_100MHZ",
           "cordic_0/clock",
-          "tremolo_1/clk",
-          "AXI_tremolo_paramete_0/s00_axi_aclk"
+          "AXI_tremolo_paramete_0/s00_axi_aclk",
+          "tremolo_1/clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
