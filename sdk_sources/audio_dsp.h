@@ -1,11 +1,11 @@
 /*
- * adventures_with_ip.h
+ * audio_dsp.h
  *
  * Main header file.
  */
 
-#ifndef ADVENTURES_WITH_IP_H_
-#define ADVENTURES_WITH_IP_H_
+#ifndef __AUDIO_DSP_H_
+#define __AUDIO_DSP_H
 
 /* ---------------------------------------------------------------------------- *
  * 								Header Files									*
@@ -41,4 +41,4 @@
 XIicPs Iic;
 XGpio Gpio; // Gpio instance for buttons and switches
 
-#endif /* ADVENTURES_WITH_IP_H_ */
+#endif /* __AUDIO_DSP_H */

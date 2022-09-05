@@ -1,9 +1,0 @@
-sv xil_defaultlib  \
-"../../../../tremolo_zedboard.srcs/sources_1/ip/tremolo_0/src/tremolo.v" \
-
-verilog xil_defaultlib  \
-"../../../../tremolo_zedboard.srcs/sources_1/ip/tremolo_0/sim/tremolo_0.v" \
-
-verilog xil_defaultlib "glbl.v"
-
-nosort

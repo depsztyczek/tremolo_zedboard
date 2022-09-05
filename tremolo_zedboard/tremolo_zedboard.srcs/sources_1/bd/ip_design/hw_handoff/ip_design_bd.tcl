@@ -175,6 +175,9 @@ proc create_root_design { parentCell } {
   set SDATA_I_0 [ create_bd_port -dir I SDATA_I_0 ]
   set SDATA_O_0 [ create_bd_port -dir O SDATA_O_0 ]
 
+  # Create instance: AXI_tremolo_paramete_0, and set properties
+  set AXI_tremolo_paramete_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:AXI_tremolo_parameters:1.0 AXI_tremolo_paramete_0 ]
+
   # Create instance: axi_gpio_0, and set properties
   set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0 ]
   set_property -dict [ list \
@@ -610,10 +613,6 @@ proc create_root_design { parentCell } {
 
   # Create instance: tremolo_1, and set properties
   set tremolo_1 [ create_bd_cell -type ip -vlnv xilinx.com:user:tremolo:1.0 tremolo_1 ]
-  set_property -dict [ list \
-   CONFIG.MODULATION_DEPTH {0x333333} \
-   CONFIG.TREMOLO_FREQ {4} \
- ] $tremolo_1
 
   # Create interface connections
   connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports GPIO_0] [get_bd_intf_pins axi_gpio_0/GPIO]
@@ -621,24 +620,28 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
   connect_bd_intf_net -intf_net processing_system7_0_IIC_1 [get_bd_intf_ports IIC_1_0] [get_bd_intf_pins processing_system7_0/IIC_1]
   connect_bd_intf_net -intf_net processing_system7_0_M_AXI_GP0 [get_bd_intf_pins processing_system7_0/M_AXI_GP0] [get_bd_intf_pins ps7_0_axi_periph/S00_AXI]
+  connect_bd_intf_net -intf_net ps7_0_axi_periph_M00_AXI [get_bd_intf_pins AXI_tremolo_paramete_0/S00_AXI] [get_bd_intf_pins ps7_0_axi_periph/M00_AXI]
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M01_AXI [get_bd_intf_pins axi_gpio_0/S_AXI] [get_bd_intf_pins ps7_0_axi_periph/M01_AXI]
 
   # Create port connections
+  connect_bd_net -net AXI_tremolo_paramete_0_modulation_depth [get_bd_pins AXI_tremolo_paramete_0/modulation_depth] [get_bd_pins tremolo_1/modulation_depth]
+  connect_bd_net -net AXI_tremolo_paramete_0_modulation_frequency [get_bd_pins AXI_tremolo_paramete_0/modulation_frequency] [get_bd_pins tremolo_1/modulation_frequency]
+  connect_bd_net -net AXI_tremolo_paramete_0_tremolo_en [get_bd_pins AXI_tremolo_paramete_0/tremolo_en] [get_bd_pins tremolo_1/en]
   connect_bd_net -net SDATA_I_0_1 [get_bd_ports SDATA_I_0] [get_bd_pins iis_deserializer_0/SDATA]
   connect_bd_net -net cordic_0_cos_out [get_bd_pins cordic_0/cos_out] [get_bd_pins tremolo_1/cos_in]
   connect_bd_net -net cordic_0_sin_out [get_bd_pins cordic_0/sin_out] [get_bd_pins tremolo_1/sin_in]
   connect_bd_net -net cordic_0_valid_out [get_bd_pins cordic_0/valid_out] [get_bd_pins tremolo_1/input_sin_valid]
   connect_bd_net -net i2s_clocking_0_BCLK [get_bd_ports BCLK_0] [get_bd_pins i2s_clocking_0/BCLK] [get_bd_pins iis_deserializer_0/SCLK] [get_bd_pins iis_serializer_0/SCLK]
-  connect_bd_net -net i2s_clocking_0_EN [get_bd_pins i2s_clocking_0/EN] [get_bd_pins iis_deserializer_0/EN] [get_bd_pins tremolo_1/en]
+  connect_bd_net -net i2s_clocking_0_EN [get_bd_pins i2s_clocking_0/EN] [get_bd_pins iis_deserializer_0/EN]
   connect_bd_net -net i2s_clocking_0_LRCLK [get_bd_ports LRCLK_0] [get_bd_pins i2s_clocking_0/LRCLK] [get_bd_pins iis_deserializer_0/LRCLK] [get_bd_pins iis_serializer_0/LRCLK]
   connect_bd_net -net iis_deserializer_0_LDATA [get_bd_pins iis_deserializer_0/LDATA] [get_bd_pins tremolo_1/left_in]
   connect_bd_net -net iis_deserializer_0_RDATA [get_bd_pins iis_deserializer_0/RDATA] [get_bd_pins tremolo_1/right_in]
   connect_bd_net -net iis_deserializer_0_VALID [get_bd_pins iis_deserializer_0/VALID] [get_bd_pins tremolo_1/input_data_valid]
   connect_bd_net -net iis_serializer_0_SDATA [get_bd_ports SDATA_O_0] [get_bd_pins iis_serializer_0/SDATA]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins cordic_0/clock] [get_bd_pins i2s_clocking_0/CLK_100M] [get_bd_pins iis_deserializer_0/CLK_100MHZ] [get_bd_pins iis_serializer_0/CLK_100MHZ] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk] [get_bd_pins tremolo_1/clk]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins AXI_tremolo_paramete_0/s00_axi_aclk] [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins cordic_0/clock] [get_bd_pins i2s_clocking_0/CLK_100M] [get_bd_pins iis_deserializer_0/CLK_100MHZ] [get_bd_pins iis_serializer_0/CLK_100MHZ] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk] [get_bd_pins tremolo_1/clk]
   connect_bd_net -net processing_system7_0_FCLK_CLK1 [get_bd_ports FCLK_CLK1_0] [get_bd_pins processing_system7_0/FCLK_CLK1]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
-  connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
+  connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins AXI_tremolo_paramete_0/s00_axi_aresetn] [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
   connect_bd_net -net rst_ps7_0_100M_peripheral_reset [get_bd_pins cordic_0/reset] [get_bd_pins rst_ps7_0_100M/peripheral_reset] [get_bd_pins tremolo_1/rst]
   connect_bd_net -net tremolo_1_angle_out [get_bd_pins cordic_0/angle_in] [get_bd_pins tremolo_1/angle_out]
   connect_bd_net -net tremolo_1_left_out [get_bd_pins iis_serializer_0/LDATA] [get_bd_pins tremolo_1/left_out]
@@ -647,6 +650,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net tremolo_1_right_out [get_bd_pins iis_serializer_0/RDATA] [get_bd_pins tremolo_1/right_out]
 
   # Create address segments
+  create_bd_addr_seg -range 0x00010000 -offset 0x43C00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs AXI_tremolo_paramete_0/S00_AXI/S00_AXI_reg] SEG_AXI_tremolo_paramete_0_S00_AXI_reg
   create_bd_addr_seg -range 0x00010000 -offset 0x41200000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs axi_gpio_0/S_AXI/Reg] SEG_axi_gpio_0_Reg
 
 

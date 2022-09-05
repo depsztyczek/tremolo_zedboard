@@ -39,17 +39,13 @@ In SDK:
 
 Project is ready for development, flashing and debugging.
 
-## Project progress for 21.08
+## Project progress for 05.09
 
 1. Simulated the expected behaviour in python
 2. Implemented I2S codec drivers on FPGA - audio samples were accessed through AXI, and modulation of audio was done in the microcontroller in C code. At this stage, the planned function was working correctly - we went back to implement the module in FPGA to comply with the curriculum behind SDUP.
 3. Testbench is implemented - we can see plots of ideal modulated cosine wave, versus the actual one that we get from the test.
 4. I2S audio loopback works correctly on hardware, without the use of microcontroller.
 5. IP core tremolo is implemented - it takes the samples from I2S deserializer, modulates them, and sends them back to the serializer. It uses the cordic algorithm for sine wave generation.
-6. The tremolo modulation works in hardware, but to change the parameters you need to recompile FPGA.
-
-Current goal - implement configuration of tremolo parameters via AXI-lite.
-
-❗ The current development branch is called AXI_tremolo_parameters. ❗
+6. The tremolo modulation works in hardware, the tremolo parameters are configurable via UART.
 
 To see a demo of our solution, download https://we.tl/t-ktl1BE7T6J file.
