@@ -6,6 +6,7 @@
 #include "xil_io.h"
 #include "xparameters.h"
 #include "math.h"
+#include "axi_helper.h"
 /* ---------------------------------------------------------------------------- *
  * 									Define's			 						*
  * ---------------------------------------------------------------------------- */
@@ -20,6 +21,7 @@
 
 u32 UART_ReadThreeDigitDecVal(void);
 u32 UART_GetFXP_SQ0_23(void);
+void UART_TremoloConfiguration(void);
 u32 UART_GetDecDigit(char8 byte);
 
 #endif

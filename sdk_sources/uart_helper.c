@@ -84,6 +84,56 @@ u16 digitsCounter = 0;
 }
 
 /**
+ *  UART_TremoloConfiguration - Configure Tremolo using UART IO
+ */
+
+void UART_TremoloConfiguration(void)
+{
+
+	char8 recChar;
+	u32 enableTremolo;
+	u32 depth;
+	u32 frequency;
+
+	xil_printf("Enable Tremolo effect? (Enter 1 or 0)\r\n");
+	outbyte (recChar = inbyte());
+	enableTremolo = (UART_GetDecDigit(recChar));
+
+	if(enableTremolo == ENABLE_TREMOLO)
+	{
+		xil_printf("\n\rEnter depth [-1, 1)\r\n");
+		depth = UART_GetFXP_SQ0_23();
+
+		xil_printf("Enter frequency as integer [1-999]\r\n");
+		frequency = UART_ReadThreeDigitDecVal();
+
+		if((depth == 0) | (frequency == 0))
+		{
+			configureTremolo(DISABLE_TREMOLO, 0, 0);
+			xil_printf("\r\nConfiguration erroneous, try again. Tremolo disabled.\r\n.");
+		}
+		else
+		{
+			configureTremolo(enableTremolo, depth, frequency);
+			xil_printf("\r\nTremolo configured. Depth: %x, Freq: %d.\r\n", depth, frequency);
+		}
+
+	}
+	else
+	{
+		configureTremolo(DISABLE_TREMOLO, 0, 0);
+		xil_printf("\r\nTremolo disabled, entering loopback mode.\r\n");
+	}
+
+	xil_printf("Press enter to reconfigure Tremolo.\r\n");
+	do
+	{
+		outbyte (recChar = inbyte());
+	}
+	while(recChar != CARRIAGE_RETURN);
+}
+
+/**
  *  printDecimalFXPVal - print fixed-point value in decimal format
  *  val - value to print out in radix-2 fixed-point
  *  scale - Fixed-point scaling factor
